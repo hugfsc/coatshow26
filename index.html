@@ -223,7 +223,7 @@ textarea.txt{resize:none;min-height:80px;}
       <div class="hdr-sub">ACS · Indianapolis · May 5–7</div>
     </div>
   </div>
-  <button class="sync-btn" onclick="switchTab('sync')">
+  <button class="sync-btn">
     <span>📤 Sync</span>
     <span id="headerBadge" class="sbadge" style="display:none">0</span>
   </button>
@@ -240,14 +240,14 @@ textarea.txt{resize:none;min-height:80px;}
           <span class="search-ico">🔍</span>
           <input class="search-input" id="searchInput" type="text" placeholder="Search companies…" oninput="filterCompanies()">
         </div>
-        <button class="add-btn" onclick="openAddModal()" title="Add floor find">+</button>
+        <button class="add-btn" title="Add floor find">+</button>
       </div>
       <div class="filter-row">
-        <span class="fchip" id="chip-all" onclick="setFilter('all')" style="background:var(--accent-pale);color:var(--accent);border-color:rgba(232,112,58,.4);">All</span>
-        <span class="fchip" id="chip-t1" onclick="setFilter('t1')">★ Tier 1</span>
-        <span class="fchip" id="chip-t2" onclick="setFilter('t2')">▲ Tier 2</span>
-        <span class="fchip" id="chip-crm" onclick="setFilter('crm')">🔑 CRM</span>
-        <span class="fchip" id="chip-ta" onclick="setFilter('ta')">TA Accounts</span>
+        <span class="fchip" id="chip-all" style="background:var(--accent-pale);color:var(--accent);border-color:rgba(232,112,58,.4);">All</span>
+        <span class="fchip" id="chip-t1">★ Tier 1</span>
+        <span class="fchip" id="chip-t2">▲ Tier 2</span>
+        <span class="fchip" id="chip-crm">🔑 CRM</span>
+        <span class="fchip" id="chip-ta">TA Accounts</span>
       </div>
     </div>
     <div id="companyList"></div>
@@ -355,7 +355,7 @@ textarea.txt{resize:none;min-height:80px;}
       <div class="stat-card"><div class="stat-num" id="statCompanies">0</div><div class="stat-lbl">Companies Visited</div></div>
     </div>
 
-    <button class="sync-main-btn" id="syncMainBtn" onclick="syncNotes()" disabled>✅ All Synced</button>
+    <button class="sync-main-btn" id="syncMainBtn" id="syncMainBtn" disabled>✅ All Synced</button>
     <div id="syncStatus"></div>
 
     <div class="setting-group">
@@ -363,7 +363,7 @@ textarea.txt{resize:none;min-height:80px;}
       <div class="api-key-wrap" style="position:relative;">
         <input class="setting-input" type="password" id="apiKeyInput" placeholder="sk-ant-…">
       </div>
-      <button class="setting-btn" onclick="saveApiKey()">Save Key</button>
+      <button class="setting-btn" id="saveApiBtn">Save Key</button>
       <div class="api-note">Enter your Claude API key once per day. Stored locally, used for business card scanning only.</div>
       <div class="url-status" id="apiStatus"></div>
     </div>
@@ -371,7 +371,7 @@ textarea.txt{resize:none;min-height:80px;}
     <div class="setting-group">
       <div class="setting-label">Google Apps Script URL</div>
       <input class="setting-input" type="text" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/…/exec">
-      <button class="setting-btn" onclick="saveScriptUrl()">Save URL</button>
+      <button class="setting-btn" id="saveUrlBtn">Save URL</button>
       <div class="url-status" id="urlStatus"></div>
     </div>
 
@@ -391,17 +391,17 @@ textarea.txt{resize:none;min-height:80px;}
 
 <!-- BOTTOM NAV -->
 <div class="bnav">
-  <button class="nbtn active" id="nav-companies" onclick="switchTab('companies')"><span class="ico">🏢</span>Companies</button>
-  <button class="nbtn" id="nav-route" onclick="switchTab('route')"><span class="ico">🗺️</span>Route</button>
-  <button class="nbtn" id="nav-notes" onclick="switchTab('notes')"><span class="ico">📝</span>Notes</button>
-  <button class="nbtn" id="nav-speakers" onclick="switchTab('speakers')"><span class="ico">🎤</span>Connect</button>
-  <button class="nbtn" id="nav-sync" onclick="switchTab('sync')"><span class="ico">📤</span>Sync</button>
+  <button class="nbtn active" id="nav-companies"><span class="ico">🏢</span>Companies</button>
+  <button class="nbtn" id="nav-route"><span class="ico">🗺️</span>Route</button>
+  <button class="nbtn" id="nav-notes"><span class="ico">📝</span>Notes</button>
+  <button class="nbtn" id="nav-speakers"><span class="ico">🎤</span>Connect</button>
+  <button class="nbtn" id="nav-sync"><span class="ico">📤</span>Sync</button>
 </div>
 
 <!-- NOTE FORM (full screen) -->
 <div class="form-panel" id="formPanel">
   <div class="form-hdr">
-    <button class="back-btn" onclick="closeForm()">←</button>
+    <button class="back-btn">←</button>
     <div>
       <div class="form-co-name" id="formCoName"></div>
       <div class="form-co-meta" id="formCoMeta"></div>
@@ -431,7 +431,7 @@ textarea.txt{resize:none;min-height:80px;}
     <div class="sec-label">Contact (from Business Card or Manual)</div>
     <input type="file" id="cardInput" accept="image/*" capture="environment" onchange="handleCardPhoto(event)" style="display:none">
     <img id="cardPreview" src="" alt="Card preview">
-    <button class="scan-btn" id="scanBtn" onclick="document.getElementById('cardInput').click()">📷 Scan Business Card — auto-fill below</button>
+    <button class="scan-btn" id="scanBtn">📷 Scan Business Card — auto-fill below</button>
 
     <!-- Contact fields -->
     <div class="inp-row">
@@ -446,19 +446,19 @@ textarea.txt{resize:none;min-height:80px;}
     <!-- Interest level -->
     <div class="sec-label" style="margin-top:6px;">Interest Level</div>
     <div class="chips" id="interestChips">
-      <span class="chip" onclick="pickChip('interest','🔥 Hot',this,'c-hot')">🔥 Hot</span>
-      <span class="chip" onclick="pickChip('interest','👍 Warm',this,'c-warm')">👍 Warm</span>
-      <span class="chip" onclick="pickChip('interest','❄️ Cold',this,'c-cold')">❄️ Cold</span>
+      <span class="chip">🔥 Hot</span>
+      <span class="chip">👍 Warm</span>
+      <span class="chip">❄️ Cold</span>
     </div>
 
     <!-- Follow-up -->
     <div class="sec-label">Follow-up Action</div>
     <div class="chips" id="followupChips">
-      <span class="chip" onclick="pickChip('followup','Send info',this,'c-fu')">Send info</span>
-      <span class="chip" onclick="pickChip('followup','Schedule demo',this,'c-fu')">Schedule demo</span>
-      <span class="chip" onclick="pickChip('followup','Loop in AM',this,'c-fu')">Loop in AM</span>
-      <span class="chip" onclick="pickChip('followup','Quote needed',this,'c-fu')">Quote needed</span>
-      <span class="chip" onclick="pickChip('followup','No action',this,'c-fu')">No action</span>
+      <span class="chip">Send info</span>
+      <span class="chip">Schedule demo</span>
+      <span class="chip">Loop in AM</span>
+      <span class="chip">Quote needed</span>
+      <span class="chip">No action</span>
     </div>
 
     <!-- Notes -->
@@ -467,15 +467,15 @@ textarea.txt{resize:none;min-height:80px;}
       <textarea class="txt" id="fSummary" placeholder="Who did you meet? Key pain points, interest areas, next steps, competitors mentioned…" rows="4"></textarea>
     </div>
 
-    <button class="save-btn" onclick="saveNote()"><span id="saveBtnLbl">💾 Save Note Locally</span></button>
+    <button class="save-btn"><span id="saveBtnLbl">💾 Save Note Locally</span></button>
     <div class="pb"></div>
   </div>
 </div>
 
 <!-- ADD COMPANY MODAL -->
-<div class="modal-bg" id="addModal" onclick="closeAddModal(event)">
+<div class="modal-bg" id="addModal">
   <div class="modal-box">
-    <button class="modal-close" onclick="document.getElementById('addModal').classList.remove('open')">✕</button>
+    <button class="modal-close" id="closeModalBtn">✕</button>
     <div class="modal-title">✦ Add Floor Find</div>
     <div class="inp-label">Company Name *</div>
     <input class="txt" type="text" id="newName" placeholder="Company name" style="margin-bottom:10px;width:100%;">
@@ -485,75 +485,143 @@ textarea.txt{resize:none;min-height:80px;}
     <input class="txt" type="number" id="newScore" placeholder="70" min="1" max="100" style="margin-bottom:10px;width:100%;">
     <div class="inp-label" style="margin-top:4px;">Tier</div>
     <div class="tier-row" style="margin-bottom:10px;">
-      <div class="topt" id="topt1" onclick="pickTier(1)">★ Tier 1</div>
-      <div class="topt sel-t2" id="topt2" onclick="pickTier(2)">▲ Tier 2</div>
+      <div class="topt" id="topt1">★ Tier 1</div>
+      <div class="topt sel-t2" id="topt2">▲ Tier 2</div>
     </div>
     <div class="inp-label">Why relevant?</div>
     <textarea class="txt" id="newReason" placeholder="Why is this company relevant for TF?" rows="2" style="width:100%;margin-bottom:10px;"></textarea>
-    <button class="confirm-btn" onclick="confirmAddCompany()">Add Company</button>
+    <button class="confirm-btn" id="confirmAddBtn">Add Company</button>
   </div>
 </div>
 
 <script>
-// ── DATA ─────────────────────────────────────────────────────
 const BASE = [{"rank": 1, "name": "BASF Corporation", "booth": "1529", "score": 99, "tier": 1, "rationale": "World's largest chemical company; SEM/TEM/XPS/FIB standard across pigment dispersion, polymer morphology, nanotechnology, adhesion R&D", "opp": "162303", "instrument": "APREO 2 C HiVac", "contact": "Keqing Fa", "email": "keqing.fa@basf.com", "am": "TA", "notes": ""}, {"rank": 2, "name": "Evonik Corporation", "booth": "2030", "score": 98, "tier": 1, "rationale": "Silica, fumed silica, aerosil; XPS/TEM/SEM core to R&D and QC", "opp": "253005", "instrument": "AXIA ChemiSEM LoVac", "contact": "Todd Mcevoy", "email": "todd.mcevoy@evonik.com", "am": "MS", "notes": ""}, {"rank": 3, "name": "Arkema", "booth": "1130", "score": 97, "tier": 1, "rationale": "Specialty polymers, PVDF, performance materials; SEM/TEM/XPS for polymer morphology and surface analysis", "opp": "213091", "instrument": "NEXSA G2", "contact": "Pierre Ricou", "email": "pierre.ricou@arkemagroup.com", "am": "MS", "notes": ""}, {"rank": 4, "name": "Cabot Corporation", "booth": "2575", "score": 97, "tier": 1, "rationale": "Carbon black & specialty fluids; SEM/TEM essential for aggregate structure, surface area, and particle morphology", "opp": "67996", "instrument": "Lost TALOS F200X (2018)", "contact": "Brian Sneed", "email": "brian_sneed@cabotcmp.com", "am": "TA", "notes": ""}, {"rank": 5, "name": "Sun Chemical", "booth": "1866", "score": 97, "tier": 1, "rationale": "Global pigment/colorant leader; SEM/TEM/XPS standard for particle morphology, crystal structure, surface chemistry QA/QC", "opp": "257395", "instrument": "Lost TALOS F200X (2025) - J120i", "contact": "Nicolau Constantinos", "email": "constantinos.nicolaou@sunchemical.com", "am": "TA", "notes": "Lost to TESCAN SEM in 2023"}, {"rank": 6, "name": "Wacker Chemical Corporation", "booth": "1946", "score": 97, "tier": 1, "rationale": "Silicone and polymer chemistry; FIB/SEM for cross-section analysis of silicone films, emulsions, and adhesive interfaces", "opp": "256266", "instrument": "Software for Quanta 3D", "contact": "Mark Rollog", "email": "mark.rollog@wacker.com", "am": "TA", "notes": "Old Quanta with new NSI software. Neeed to check"}, {"rank": 7, "name": "Allnex", "booth": "1329", "score": 96, "tier": 1, "rationale": "Resins for coatings; SEM/TEM for film morphology, cross-link density imaging, and surface characterization", "opp": "200317", "instrument": "NF Phenom Pro (2024)", "contact": "Tong Wang", "email": "Tong.Wang@allnex.com", "am": "LW", "notes": "Polymer coating (PU) and 3D rinting"}, {"rank": 8, "name": "DOW", "booth": "2330", "score": 96, "tier": 1, "rationale": "Polymer and epoxy chemistry; SEM/TEM for morphology, adhesion, interface, and film formation R&D", "opp": "192498", "instrument": "AXIA ChemiSEM LoVac", "contact": "Brad Ramsden", "email": "Brad.Ramsden@Dow.com", "am": "TA", "notes": "Lastcom was in 03/25"}, {"rank": 9, "name": "OCSiAl", "booth": "1882", "score": 96, "tier": 1, "rationale": "Single-wall carbon nanotubes; TEM/SEM essential for nanotube morphology, dispersion, and network characterization", "opp": "59225", "instrument": "TALOS F200X G2", "contact": "EUROPE", "email": "", "am": "TA", "notes": "EUROPE but Branch in OH"}, {"rank": 10, "name": "Orion Engineered Carbons", "booth": "1466", "score": 96, "tier": 1, "rationale": "Carbon black producer; SEM/TEM for aggregate/agglomerate structure characterization is core QC", "opp": "37329", "instrument": "Lost Quanta 250 (2015)", "contact": "EUROPE", "email": "", "am": "EMEA", "notes": "They got a Zeiss"}, {"rank": 11, "name": "Birla Carbon", "booth": "1648", "score": 95, "tier": 1, "rationale": "Carbon black; SEM/TEM for structure/morphology is standard QA", "opp": "248773", "instrument": "TALOS F200X G2", "contact": "Tyler Gruber", "email": "TYLER.GRUBER@ADITYABIRLA.COM", "am": "LW", "notes": "LW supposed to discuss with them ean of 2026"}, {"rank": 12, "name": "Chemours", "booth": "712", "score": 95, "tier": 1, "rationale": "TiO2 (Ti-Pure) and fluoropolymers; SEM/TEM core for TiO2 particle characterization and PTFE morphology", "opp": "170463", "instrument": "NF Pharos G2", "contact": "Allison Sichler", "email": "allison.sichler@chemours.com", "am": "MS", "notes": "Additional name: christopher.chan@chemours.com"}, {"rank": 13, "name": "Clariant", "booth": "3058", "score": 95, "tier": 1, "rationale": "Specialty chemicals, waxes, pigment dispersions; SEM/XPS for surface modification and particle analysis", "opp": "116335", "instrument": "K-Alpha", "contact": "Sally Davies", "email": "Sally.davies@clariant.com", "am": "TA", "notes": "Customer has an APREO. XPS OPP is old (2021-2025)"}, {"rank": 14, "name": "Elementis", "booth": "729", "score": 95, "tier": 1, "rationale": "Rheology additives and organoclays; SEM/TEM/XPS for surface modification and intercalation studies", "opp": "90489", "instrument": "NF APREO S HiVac", "contact": "Griffin Williams", "email": "griffin.williams@elementis.com", "am": "MS", "notes": "Funding applied to toward JEOL in Finland for SEM in 2020. In NJ using Princeton for analyses. Griffin just joined Elementis from Benjamin Moore"}, {"rank": 15, "name": "Sudarshan USA", "booth": "1846", "score": 95, "tier": 1, "rationale": "High-performance pigments; SEM/TEM for particle size, shape, and surface coating QC", "opp": "", "instrument": "", "contact": "Colin Ivich", "email": "", "am": "MS", "notes": "New Jersey, Might be able to book  meeting with Colin Ivich, as asked on LinkedIn, Booth 1846"}, {"rank": 16, "name": "Vibrantz Technologies", "booth": "1336", "score": 95, "tier": 1, "rationale": "Specialty pigments and materials; SEM/XPS for particle and surface characterization", "opp": "201133", "instrument": "PRISMA E", "contact": "Mohamadreza (Reza) Beitollahpoor", "email": "reza.beitollahpoor@vibrantz.com", "am": "TA", "notes": "Old contact was Bradford Smith, New contact: Richard Edgington, rick.edgington@vibrantz.com"}, {"rank": 17, "name": "Momentive Performance Materials", "booth": "2942", "score": 94, "tier": 1, "rationale": "Silicones and quartz; SEM/TEM for silicone morphology and interface", "opp": "90593", "instrument": "NF Phenom Particle X", "contact": "Cheng Diao", "email": "cheng.diao@momentive.com", "am": "DG", "notes": "Tiffany.Koval@momentive.com"}, {"rank": 18, "name": "Nouryon", "booth": "953", "score": 94, "tier": 1, "rationale": "Specialty chemicals, resins, and dispersants; SEM/XPS for particle surface characterization", "opp": "122033", "instrument": "NF Phenom Pro G6", "contact": "Lisa Tokmic", "email": "ltokmic@nouryon.com", "am": "DG", "notes": "They are also Akzo Nobel"}, {"rank": 19, "name": "Advent Silica Materials", "booth": "2956", "score": 93, "tier": 1, "rationale": "Specialty silica materials; SEM/TEM/XPS for pore structure, surface area, and surface chemistry", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": "NJ, Trade agent"}, {"rank": 20, "name": "Burgess Pigment Company", "booth": "1566", "score": 93, "tier": 1, "rationale": "Kaolin pigments; SEM for particle shape and size distribution QC", "opp": "", "instrument": "", "contact": "Chris Fagouri", "email": "chris.fagouri@burgesspigment.com", "am": "LW", "notes": "GA,"}, {"rank": 21, "name": "Imerys", "booth": "3038", "score": 93, "tier": 1, "rationale": "Talc, kaolin, calcium carbonate; SEM/TEM/XPS for particle size, shape, surface treatment, and delamination structure", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 22, "name": "Nano Catalytics", "booth": "3084", "score": 93, "tier": 1, "rationale": "Nanocatalysis; TEM/SEM/XPS essential for catalyst particle and support characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 23, "name": "Schlenk Metallic Pigments", "booth": "545", "score": 93, "tier": 1, "rationale": "Metal effect pigments; SEM/TEM for flake morphology and surface coating analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 24, "name": "Svenska Aerogel AB", "booth": "1280", "score": 93, "tier": 1, "rationale": "Aerogel materials; SEM/TEM for pore structure, BET area, and morphology characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 25, "name": "Synthomer", "booth": "1447", "score": 93, "tier": 1, "rationale": "Polymer emulsions and lattices; TEM for latex particle morphology, film formation, and core-shell structure", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 26, "name": "The Shepherd Color Company", "booth": "2760", "score": 93, "tier": 1, "rationale": "Complex inorganic color pigments; SEM/TEM/XPS for crystal structure and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 27, "name": "Wanhua Chemical (America)", "booth": "1237", "score": 93, "tier": 1, "rationale": "MDI/TDI polyurethane raw materials; SEM/TEM for foam morphology, polymer characterization, and interface structure", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 28, "name": "Calyxia", "booth": "507", "score": 92, "tier": 1, "rationale": "Microencapsulation; SEM/TEM to visualize capsule wall thickness, size distribution, and morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 29, "name": "Cardolite", "booth": "1154", "score": 92, "tier": 1, "rationale": "Cardanol-based epoxy curing agents; SEM for cured morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 30, "name": "Gemme Nano Tech (Canton)", "booth": "2785", "score": 92, "tier": 1, "rationale": "Nano materials; TEM/SEM/XPS standard for nanoparticle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 31, "name": "Hexion", "booth": "1576", "score": 92, "tier": 1, "rationale": "Epoxy resins and curing agents; SEM/FIB for cross-section, void analysis, and polymer network structure", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 32, "name": "INEOS Pigments USA", "booth": "859", "score": 92, "tier": 1, "rationale": "TiO2 pigments; SEM/TEM for particle size, shape, surface coating QC — critical for TiO2", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 33, "name": "LANXESS Corporation", "booth": "1037", "score": 92, "tier": 1, "rationale": "Specialty chemicals, ion exchange, rubber chemicals; SEM/TEM/XPS for polymer and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 34, "name": "Omya", "booth": "1840", "score": 92, "tier": 1, "rationale": "Calcium carbonate and minerals; SEM for particle shape, size, and surface coating characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 35, "name": "Shin-Etsu Siliones of America", "booth": "1857", "score": 92, "tier": 1, "rationale": "Silicone polymers and resins; FIB/SEM for cross-section, XPS for surface Si chemistry", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 36, "name": "AB Specialty Silicones", "booth": "850", "score": 91, "tier": 1, "rationale": "Specialty silicones; SEM/XPS for silicone film morphology and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 37, "name": "AFCONA Additives USA", "booth": "1254", "score": 91, "tier": 1, "rationale": "Wetting, dispersing, defoaming additives; SEM/XPS for pigment surface interaction and dispersion efficiency", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 38, "name": "Ashland", "booth": "1248", "score": 91, "tier": 1, "rationale": "Specialty additives, rheology modifiers; SEM/XPS for particle and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 39, "name": "Croda", "booth": "340", "score": 91, "tier": 1, "rationale": "Specialty chemicals, biosurfactants; SEM/XPS for surface characterization and bio-based polymer analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 40, "name": "Huber Engineered Materials", "booth": "2938", "score": 91, "tier": 1, "rationale": "Alumina trihydrate, calcium carbonate, and specialty minerals; SEM/TEM for particle and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 41, "name": "King Industries", "booth": "2166", "score": 91, "tier": 1, "rationale": "Specialty catalysts, sulfonamides, and additives; XPS for surface reaction and catalyst characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 42, "name": "Lubrizol", "booth": "2638", "score": 91, "tier": 1, "rationale": "Specialty chemicals for coatings; XPS for tribological film analysis, SEM for polymer morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 43, "name": "Magris Talc USA", "booth": "1255", "score": 91, "tier": 1, "rationale": "Talc minerals; SEM/TEM for platelet aspect ratio and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 44, "name": "Polynt Group", "booth": "1729", "score": 91, "tier": 1, "rationale": "Unsaturated polyester resins and composites; SEM/FIB for resin/glass fiber interface cross-section analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 45, "name": "Sasol Chemicals", "booth": "1776", "score": 91, "tier": 1, "rationale": "Waxes, alcohols, specialty chemicals; SEM/XPS for surface modification and wax crystal morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 46, "name": "Specialty Minerals", "booth": "969", "score": 91, "tier": 1, "rationale": "Precipitated calcium carbonate; SEM for particle morphology and surface treatment QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 47, "name": "Alberdingk Boley", "booth": "2757", "score": 90, "tier": 1, "rationale": "Water-based polyurethane dispersions; TEM/SEM for latex particle morphology and film structure", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 48, "name": "Bakelite Synthetics", "booth": "335", "score": 90, "tier": 1, "rationale": "Phenolic resins; SEM for cured resin morphology and interface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 49, "name": "Borchers: A Milliken Brand", "booth": "2266", "score": 90, "tier": 1, "rationale": "Metallic driers and biocides; XPS for metal-surface interactions", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 50, "name": "Cambridge Polymer Group", "booth": "708", "score": 90, "tier": 1, "rationale": "Polymer testing and consulting lab; SEM/TEM/XPS routinely used for polymer characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 51, "name": "Cinkarna Celje d.d.", "booth": "2866", "score": 90, "tier": 1, "rationale": "TiO2 and specialty chemicals; SEM/TEM for TiO2 particle characterization — core QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 52, "name": "DYF Pigments Corp.", "booth": "419", "score": 90, "tier": 1, "rationale": "Pigment manufacturer/distributor; SEM for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 53, "name": "FP-Pigments", "booth": "2782", "score": 90, "tier": 1, "rationale": "Specialty pigments; SEM/TEM/XPS for surface and morphology characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 54, "name": "Guangxi Jinmao Titanium", "booth": "2597", "score": 90, "tier": 1, "rationale": "TiO2 manufacturer; SEM/TEM for particle size and surface QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 55, "name": "Ingevity", "booth": "834", "score": 90, "tier": 1, "rationale": "Pine-based specialty chemicals; XPS/SEM for surface modification and bio-based polymer characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 56, "name": "Kuraray America", "booth": "336", "score": 90, "tier": 1, "rationale": "PVA, PVB, and specialty polymers; SEM/TEM for polymer and film morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 57, "name": "Meghmani Pigments", "booth": "2975", "score": 90, "tier": 1, "rationale": "Organic pigments; SEM/TEM for crystal structure and particle size", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 58, "name": "Michelman", "booth": "2063", "score": 90, "tier": 1, "rationale": "Functional coatings and dispersions; SEM/XPS for surface modification and thin-film characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 59, "name": "Micro Powders", "booth": "2254", "score": 90, "tier": 1, "rationale": "Wax additives; SEM/TEM for particle and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 60, "name": "Nippon Shokubai", "booth": "346", "score": 90, "tier": 1, "rationale": "Acrylic acid and superabsorbents; SEM/TEM for polymer network", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 61, "name": "North Dakota State University", "booth": "2930", "score": 90, "tier": 1, "rationale": "Polymer and coatings science program; SEM/TEM/XPS core instruments in coatings research", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 62, "name": "Organic Dyes and Pigments", "booth": "2977", "score": 90, "tier": 1, "rationale": "Organic pigments; SEM/TEM for crystal morphology and dispersion", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 63, "name": "PCBL Chemical", "booth": "330", "score": 90, "tier": 1, "rationale": "Carbon black; SEM/TEM for aggregate structure — standard for carbon black QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 64, "name": "Rahn USA Corporation", "booth": "2567", "score": 90, "tier": 1, "rationale": "UV/EB curing resins and photoinitiators; SEM/XPS for cured film morphology and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 65, "name": "Saint-Gobain ZirPro", "booth": "2573", "score": 90, "tier": 1, "rationale": "Zircon and alumina grinding media; SEM/TEM for ceramic morphology and wear surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 66, "name": "Shin-Etsu MicroSi", "booth": "1860", "score": 90, "tier": 1, "rationale": "Specialty silicones; SEM/XPS for film and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 67, "name": "Stahl USA", "booth": "460", "score": 90, "tier": 1, "rationale": "Specialty coatings for leather/textiles; SEM/XPS for thin-film surface characterization and adhesion", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 68, "name": "SYENSQO", "booth": "648", "score": 90, "tier": 1, "rationale": "Specialty polymers (spun off from Solvay); SEM/XPS/TEM for advanced polymer and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 69, "name": "Cimbar", "booth": "846", "score": 89, "tier": 1, "rationale": "Barium sulfate and specialty minerals; SEM/TEM for particle morphology and surface QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 70, "name": "Dhanveen Pigments", "booth": "2066", "score": 89, "tier": 1, "rationale": "Pigment manufacturer; SEM/TEM for particle morphology and crystal structure QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 71, "name": "Innospec", "booth": "2278", "score": 89, "tier": 1, "rationale": "Fuel and oilfield additives; SEM/XPS for corrosion inhibitor surface film and deposit analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 72, "name": "Miwon North America", "booth": "1582", "score": 89, "tier": 1, "rationale": "Acrylic monomers and oligomers for UV coatings; SEM/XPS for cured film morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 73, "name": "Patcham USA", "booth": "1048", "score": 89, "tier": 1, "rationale": "Dispersants and wetting agents; SEM/XPS for pigment surface treatment and dispersion characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 74, "name": "Shamrock Technologies", "booth": "1752", "score": 89, "tier": 1, "rationale": "PTFE and wax dispersions; SEM/TEM for particle morphology and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 75, "name": "Siltech Corporation", "booth": "2981", "score": 89, "tier": 1, "rationale": "Silicone specialty chemicals; XPS/SEM for silicone surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 76, "name": "Tosoh USA", "booth": "2986", "score": 89, "tier": 1, "rationale": "Specialty chemicals and zirconia; SEM/TEM for inorganic particle and ceramic characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 77, "name": "US SILICA", "booth": "1478", "score": 89, "tier": 1, "rationale": "Industrial silica; SEM for particle size, shape, and surface area characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 78, "name": "Actylis", "booth": "1560", "score": 88, "tier": 1, "rationale": "Specialty chemicals distribution with own products; SEM/XPS for product characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 79, "name": "Arxada", "booth": "1538", "score": 88, "tier": 1, "rationale": "Biocides and preservation; SEM for biofilm and surface interaction analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 80, "name": "Ashapura Minechem", "booth": "224", "score": 88, "tier": 1, "rationale": "Kaolin and bentonite minerals; SEM for particle shape and delamination analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 81, "name": "California Polytechnic State University", "booth": "2934", "score": 88, "tier": 1, "rationale": "University; SEM/TEM/XPS standard analytical tools for polymer and coatings research", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 82, "name": "Cargill Bioindustrial", "booth": "540", "score": 88, "tier": 1, "rationale": "Bio-based chemicals and resins; SEM for bio-polymer morphology and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 83, "name": "CHT USA", "booth": "1865", "score": 88, "tier": 1, "rationale": "Specialty chemicals for textiles/coatings; SEM/XPS for surface treatment characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 84, "name": "Coatings Research Group", "booth": "945", "score": 88, "tier": 1, "rationale": "Coatings testing and consulting; SEM/XPS used for surface and film analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 85, "name": "COIM USA", "booth": "1273", "score": 88, "tier": 1, "rationale": "Polyurethane systems; SEM for foam morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 86, "name": "Covia", "booth": "2676, 2682", "score": 88, "tier": 1, "rationale": "Silica and minerals; SEM for particle shape and size distribution", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 87, "name": "Daicel ChemTech", "booth": "2860", "score": 88, "tier": 1, "rationale": "Specialty polymers; SEM/TEM for morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 88, "name": "DayGlo Color Corp", "booth": "765", "score": 88, "tier": 1, "rationale": "Fluorescent pigments; SEM/TEM for particle morphology and surface coating", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 89, "name": "Dorf Ketal Chemicals", "booth": "2696", "score": 88, "tier": 1, "rationale": "Specialty chemicals for oil/gas and coatings; SEM/XPS for surface film characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 90, "name": "Fujian Jintai Pearl Pigment", "booth": "2496", "score": 88, "tier": 1, "rationale": "Pearlescent pigments; SEM/TEM for platelet morphology and coating layers", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 91, "name": "GEO Specialty Chemicals", "booth": "1076", "score": 88, "tier": 1, "rationale": "Rheology additives and specialty fillers; SEM/XPS for surface modification and particle analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 92, "name": "Himadri Speciality", "booth": "2383", "score": 88, "tier": 1, "rationale": "Carbon black and specialty chemicals; SEM/TEM for morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 93, "name": "Incorez", "booth": "2482", "score": 88, "tier": 1, "rationale": "Polyurethane and epoxy curing agents; SEM/FIB for cross-section and interface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 94, "name": "Kukdo Chemical", "booth": "630", "score": 88, "tier": 1, "rationale": "Epoxy resins; SEM/FIB for cured morphology and cross-section analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 95, "name": "Kuncai Americas", "booth": "2666", "score": 88, "tier": 1, "rationale": "Pearlescent/effect pigments; SEM/TEM for platelet size and surface coating analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 96, "name": "Lamberti USA", "booth": "339", "score": 88, "tier": 1, "rationale": "Specialty additives for coatings; SEM/XPS for surface treatment and particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 97, "name": "Mallard Creek Polymers", "booth": "1047", "score": 88, "tier": 1, "rationale": "Latex polymers; TEM for particle morphology and film formation studies", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 98, "name": "PolyAziridine", "booth": "1074", "score": 88, "tier": 1, "rationale": "Aziridine crosslinkers; XPS/SEM for crosslinked network and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 99, "name": "SHANGHAI TITANOS INDUSTRY", "booth": "869", "score": 88, "tier": 1, "rationale": "TiO2; SEM/TEM for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 100, "name": "SK Chemicals", "booth": "1686", "score": 88, "tier": 1, "rationale": "Bio-based polyesters and specialty chemicals; SEM/TEM for polymer morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 101, "name": "Solstice Advanced Materials", "booth": "2454", "score": 88, "tier": 1, "rationale": "Advanced materials; SEM/XPS for surface and structural analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 102, "name": "Stonebridge Coatings Laboratory", "booth": "464", "score": 88, "tier": 1, "rationale": "Coatings testing laboratory; SEM/XPS for film and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 103, "name": "The University of Southern Mississippi", "booth": "3029", "score": 88, "tier": 1, "rationale": "Polymer science program; SEM/TEM/XPS standard for polymer and coatings research", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 104, "name": "THOR", "booth": "2382", "score": 88, "tier": 1, "rationale": "Biocides and specialty additives; SEM for biofilm and surface interaction analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 105, "name": "Toyobo MC USA", "booth": "2691", "score": 88, "tier": 1, "rationale": "Modified polyester resins; SEM/TEM for polymer morphology and adhesion", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 106, "name": "UBE Corporation", "booth": "806", "score": 88, "tier": 1, "rationale": "Nylon and specialty chemicals; SEM/TEM for polymer morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 107, "name": "Yipin USA", "booth": "948", "score": 88, "tier": 1, "rationale": "Iron oxide pigments; SEM/TEM for particle size and morphology QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 108, "name": "Zeochem", "booth": "2565", "score": 88, "tier": 1, "rationale": "Zeolites and specialty adsorbents; SEM/TEM for pore structure and crystal morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 109, "name": "Atul USA", "booth": "511", "score": 87, "tier": 1, "rationale": "Specialty chemicals and dyes; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 110, "name": "Aurora Center for Extreme Weather Materials", "booth": "1784", "score": 87, "tier": 1, "rationale": "Research center; SEM/XPS for weathered material characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 111, "name": "Bruno Bock Group", "booth": "624", "score": 87, "tier": 1, "rationale": "Specialty sulfur chemicals; XPS/SEM for surface reaction and thiol-surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 112, "name": "Budenheim USA", "booth": "2970", "score": 87, "tier": 1, "rationale": "Phosphate specialties; SEM/XPS for surface passivation film analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 113, "name": "Deurex AG", "booth": "3163", "score": 87, "tier": 1, "rationale": "Specialty waxes; SEM for wax crystal morphology and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 114, "name": "Essential Polymers", "booth": "2052", "score": 87, "tier": 1, "rationale": "Polymer distribution with R&D support; SEM/TEM for morphology QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 115, "name": "Ethox Chemicals", "booth": "2768", "score": 87, "tier": 1, "rationale": "Surfactants and specialty chemicals; XPS for surface activity and adsorption characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 116, "name": "Exxon Mobil Corporation", "booth": "3052", "score": 87, "tier": 1, "rationale": "Petrochemicals and specialty fluids; SEM/XPS for surface film and polymer characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 117, "name": "Gharda Chemicals", "booth": "672", "score": 87, "tier": 1, "rationale": "Specialty chemicals and dyes; XPS/SEM for surface and crystal analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 118, "name": "High Divide Minerals", "booth": "1178", "score": 87, "tier": 1, "rationale": "Specialty minerals for coatings; SEM for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 119, "name": "Inopol", "booth": "3076", "score": 87, "tier": 1, "rationale": "Specialty polymers; SEM/TEM for polymer morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 120, "name": "J. Rettenmaier USA", "booth": "1170", "score": 87, "tier": 1, "rationale": "Cellulose fillers; SEM for fiber morphology characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 121, "name": "Jiangxi Chenguang New Materials", "booth": "3138", "score": 87, "tier": 1, "rationale": "Specialty materials; SEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 122, "name": "KLJ Organic", "booth": "1474", "score": 87, "tier": 1, "rationale": "Plasticizers and specialty organics; SEM for polymer morphology studies", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 123, "name": "Kowa American Corporation", "booth": "1274", "score": 87, "tier": 1, "rationale": "Specialty chemicals; SEM/XPS for surface and particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 124, "name": "Maflon", "booth": "230", "score": 87, "tier": 1, "rationale": "PTFE and fluoropolymer dispersions; SEM/TEM for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 125, "name": "MSE Supplies", "booth": "2662", "score": 87, "tier": 1, "rationale": "Advanced materials supplier; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 126, "name": "NOF AMERICA CORPORATION", "booth": "324", "score": 87, "tier": 1, "rationale": "Specialty chemicals and lubricants; XPS for surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 127, "name": "Pidilite Industries", "booth": "2774", "score": 87, "tier": 1, "rationale": "Adhesives and specialty chemicals; SEM/XPS for adhesion and interface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 128, "name": "Prefere Melamines", "booth": "2469", "score": 87, "tier": 1, "rationale": "Melamine resins; SEM/XPS for crosslink density and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 129, "name": "Primient Covation", "booth": "563", "score": 87, "tier": 1, "rationale": "Bio-based chemicals; SEM/XPS for bio-polymer surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 130, "name": "Shanxi Bright Kaolin Technology", "booth": "2498", "score": 87, "tier": 1, "rationale": "Kaolin; SEM for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 131, "name": "SILVER ROCKET METALLIC PIGMENT", "booth": "874", "score": 87, "tier": 1, "rationale": "Metallic pigments; SEM/TEM for flake size and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 132, "name": "Sunlour Pigment", "booth": "512", "score": 87, "tier": 1, "rationale": "Pigment manufacturer; SEM for particle QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 133, "name": "TOR Minerals International", "booth": "245", "score": 87, "tier": 1, "rationale": "Barite and specialty minerals; SEM/TEM for particle morphology and QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 134, "name": "Vinavil", "booth": "1266", "score": 87, "tier": 1, "rationale": "VAE and PVAc dispersions; TEM for latex particle morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 135, "name": "Vipul Organics", "booth": "553", "score": 87, "tier": 1, "rationale": "Organic pigments; SEM/TEM for crystal structure", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 136, "name": "Zschimmer & Schwarz Interpolymer", "booth": "1854", "score": 87, "tier": 1, "rationale": "Specialty chemicals and resins; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 137, "name": "Acme-Hardesty", "booth": "2657", "score": 86, "tier": 1, "rationale": "Specialty chemicals and oleochemicals; SEM for fatty acid crystal morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 138, "name": "Anhui Shenjian New Materials", "booth": "621", "score": 86, "tier": 1, "rationale": "Specialty materials from China; SEM/XPS for surface and particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 139, "name": "Chroma Specialty Chemicals", "booth": "1174", "score": 86, "tier": 1, "rationale": "Specialty chemicals; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 140, "name": "EPS - Engineered Polymer Solutions", "booth": "2245", "score": 86, "tier": 1, "rationale": "Resin/polymer manufacturer; SEM/TEM for morphology and film characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 141, "name": "INNER MONGOLIA SANXIN KAOLIN", "booth": "2595", "score": 86, "tier": 1, "rationale": "Kaolin; SEM for particle morphology and delamination QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 142, "name": "Microban", "booth": "446", "score": 86, "tier": 1, "rationale": "Antimicrobial technology; SEM for biofilm inhibition and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 143, "name": "Praharit Pigments", "booth": "1572", "score": 86, "tier": 1, "rationale": "Pigment manufacturer; SEM/TEM for morphology QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 144, "name": "Silken Materials", "booth": "521", "score": 86, "tier": 1, "rationale": "Silicone materials; SEM/XPS for surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 145, "name": "Stanchem Resins", "booth": "2468", "score": 86, "tier": 1, "rationale": "Specialty resins; SEM for film morphology and cross-section analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 146, "name": "Westlake Epoxy", "booth": "2348", "score": 86, "tier": 1, "rationale": "Resin/polymer manufacturer; SEM/TEM for morphology and film characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 147, "name": "Anhui Shenlanhua Color", "booth": "1075", "score": 85, "tier": 1, "rationale": "Pigment manufacturer; SEM for particle QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 148, "name": "BruggemannChemical U.S.", "booth": "1060", "score": 85, "tier": 1, "rationale": "Specialty chemicals including sulfur compounds; SEM/XPS for surface reaction analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 149, "name": "Center for Bioplastics and Biocomposites (CB²)", "booth": "2932", "score": 85, "tier": 1, "rationale": "Research center; SEM/TEM for biopolymer and composite characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 150, "name": "Changzhou Tronly New Electronic Materials", "booth": "2548", "score": 85, "tier": 1, "rationale": "Specialty electronic materials; SEM/TEM for material characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 151, "name": "Guangzhou Highfar New Materials Technology", "booth": "220", "score": 85, "tier": 1, "rationale": "Specialty new materials; SEM/TEM/XPS for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 152, "name": "Innovative Chemical Technologies", "booth": "2686", "score": 85, "tier": 1, "rationale": "Specialty surface chemistry; XPS/SEM for surface modification", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 153, "name": "LEHVOSS North America", "booth": "1054", "score": 85, "tier": 1, "rationale": "Specialty additives and compounds; SEM/XPS for surface and particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 154, "name": "MANALI PIGMENTS", "booth": "449", "score": 85, "tier": 1, "rationale": "Pigment manufacturer; SEM for QA/QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 155, "name": "Nature Coatings", "booth": "614", "score": 85, "tier": 1, "rationale": "Bio-based carbon black alternative; TEM/SEM for particle morphology and structure", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 156, "name": "Navpad Pigments", "booth": "1973", "score": 85, "tier": 1, "rationale": "Pigment manufacturer; SEM/TEM for particle QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 157, "name": "Phibrochem", "booth": "2586", "score": 85, "tier": 1, "rationale": "Biocides and specialty chemicals; SEM for biofilm analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 158, "name": "Sichuan Taifeng New Flame Retardant", "booth": "317", "score": 85, "tier": 1, "rationale": "Flame retardant pigments; SEM for morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 159, "name": "Sun Polymers International", "booth": "1165", "score": 85, "tier": 1, "rationale": "Specialty polymers; SEM for morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 160, "name": "Yangfan New Materials (Zhejiang)", "booth": "973", "score": 85, "tier": 1, "rationale": "New materials; SEM/TEM/XPS for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 161, "name": "Polimeros Sinteticos", "booth": "1869", "score": 84, "tier": 2, "rationale": "Polymer distributor; moderate SEM use through customer support", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 162, "name": "Zhejiang D-Ray Technology", "booth": "2174", "score": 84, "tier": 2, "rationale": "Specialty materials and technology; SEM/TEM/XPS for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 163, "name": "COLORS MATERIAL (THAILAND)", "booth": "808", "score": 83, "tier": 2, "rationale": "Materials company; SEM/TEM likely for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 164, "name": "Eternal Materials", "booth": "529", "score": 83, "tier": 2, "rationale": "Materials company; SEM/TEM likely for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 165, "name": "Guangzhou Guanzhi New Material Technology", "booth": "760", "score": 83, "tier": 2, "rationale": "New materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 166, "name": "HUALUN ADVANCED MATERIALS (JIANGSU)", "booth": "517", "score": 83, "tier": 2, "rationale": "Materials company; SEM/TEM likely for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 167, "name": "HUZHOU EUCHEMY NEW MATERIALS", "booth": "865", "score": 83, "tier": 2, "rationale": "New materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 168, "name": "ICD High Performance Coatings + Chemistries", "booth": "2881", "score": 83, "tier": 2, "rationale": "High-performance coatings; SEM/XPS for surface and film analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 169, "name": "KLK Oleo", "booth": "2430", "score": 83, "tier": 2, "rationale": "Oleochemicals and fatty acids; SEM/XPS for fatty acid crystal and surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 170, "name": "Netzsch Premier Technologies", "booth": "2950", "score": 83, "tier": 2, "rationale": "Grinding and dispersing systems; SEM used on milled samples for customer QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 171, "name": "OPC Polymers", "booth": "1460", "score": 83, "tier": 2, "rationale": "Specialty polymers; SEM/TEM for polymer characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 172, "name": "R.S Pigments", "booth": "2375", "score": 83, "tier": 2, "rationale": "Pigment supplier; SEM/TEM for QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 173, "name": "Rianlon Americas", "booth": "1366", "score": 83, "tier": 2, "rationale": "Antioxidants and light stabilizers; XPS/SEM for additive surface interaction", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 174, "name": "Sekisui Kasei Co", "booth": "506", "score": 83, "tier": 2, "rationale": "Specialty foam beads and functional materials; SEM/TEM for particle and foam morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 175, "name": "Setas Kimya", "booth": "3046", "score": 83, "tier": 2, "rationale": "Specialty chemicals from Turkey; SEM for QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 176, "name": "SHANDONG LIXING ADVANCED MATERIAL", "booth": "766", "score": 83, "tier": 2, "rationale": "Advanced materials; SEM/TEM/XPS for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 177, "name": "SiLi Sigmund Lindner GmbH", "booth": "2969", "score": 83, "tier": 2, "rationale": "Glass beads and specialty fillers; SEM for particle morphology QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 178, "name": "Soyventis North America", "booth": "1981", "score": 83, "tier": 2, "rationale": "Bio-based solvents; limited direct SEM/XPS need", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 179, "name": "Sunpol Resins", "booth": "3085", "score": 83, "tier": 2, "rationale": "Resins; SEM for film analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 180, "name": "Superior Materials", "booth": "1066", "score": 83, "tier": 2, "rationale": "Materials company; SEM/TEM likely for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 181, "name": "ZHEJIANG MINHUI LUMINOUS TECHNOLOGY", "booth": "2494", "score": 83, "tier": 2, "rationale": "Luminescent materials; SEM/TEM for particle and coating characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 182, "name": "Zhejiang Qinghe Advanced Material Technology", "booth": "2488", "score": 83, "tier": 2, "rationale": "Advanced materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 183, "name": "ACCESS Rudolf Technologies", "booth": "3037", "score": 82, "tier": 2, "rationale": "Specialty textile and coatings chemicals; SEM/XPS for surface treatment analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 184, "name": "Baoding Hualian Top Technology", "booth": "2966", "score": 82, "tier": 2, "rationale": "Specialty materials; SEM for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 185, "name": "CB Mills", "booth": "1660", "score": 82, "tier": 2, "rationale": "Milling equipment; SEM to verify particle size reduction in customer samples", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 186, "name": "DCL Corporation", "booth": "2537", "score": 82, "tier": 2, "rationale": "Color concentrates; SEM for pigment dispersion and particle QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 187, "name": "EGE Kimya", "booth": "705", "score": 82, "tier": 2, "rationale": "Specialty chemicals; SEM for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 188, "name": "Estron Chemical", "booth": "2359, 2358", "score": 82, "tier": 2, "rationale": "Specialty chemicals and solvents; SEM/XPS for surface and solvent interaction analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 189, "name": "Georgia Southern University", "booth": "3129", "score": 82, "tier": 2, "rationale": "University; SEM/TEM used for materials research", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 190, "name": "Green Chemical", "booth": "1175", "score": 82, "tier": 2, "rationale": "Specialty chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 191, "name": "Hockmeyer Equipment Corporation", "booth": "2366", "score": 82, "tier": 2, "rationale": "Dispersing and milling equipment; SEM used on output samples for particle size validation", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 192, "name": "Hunan Juren Chemical Hitechnology", "booth": "659", "score": 82, "tier": 2, "rationale": "Specialty chemicals; SEM/XPS for surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 193, "name": "JECO Pigment China", "booth": "318", "score": 82, "tier": 2, "rationale": "Pigment manufacturer from China; SEM/TEM for particle morphology QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 194, "name": "Macro Polymers", "booth": "2958", "score": 82, "tier": 2, "rationale": "Specialty polymers; SEM for morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 195, "name": "Pflaumer Brothers", "booth": "1160", "score": 82, "tier": 2, "rationale": "Specialty chemicals and waxes; SEM for wax crystal morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 196, "name": "Prasol Chemicals Limited", "booth": "2870", "score": 82, "tier": 2, "rationale": "Specialty chemicals; SEM/XPS for surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 197, "name": "Puyang Shengtong Juyuan New Material", "booth": "223", "score": 82, "tier": 2, "rationale": "New materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 198, "name": "Shandong Landu New Material", "booth": "2288", "score": 82, "tier": 2, "rationale": "New materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 199, "name": "Shanghai Fulcolor Advanced Material", "booth": "975", "score": 82, "tier": 2, "rationale": "Advanced colorant materials; SEM/TEM for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 200, "name": "Union Process", "booth": "2658", "score": 82, "tier": 2, "rationale": "Attritor milling; SEM used on output samples", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 201, "name": "Worthen Industries", "booth": "1874", "score": 82, "tier": 2, "rationale": "Specialty coating and laminating; SEM for thin-film cross-section analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 202, "name": "WYN POLYMERS", "booth": "740", "score": 82, "tier": 2, "rationale": "Specialty polymers; SEM for morphology characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 203, "name": "ZHEJIANG YOUCHUANG MATERIAL TECHNOLOGY", "booth": "520", "score": 82, "tier": 2, "rationale": "Material technology; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 204, "name": "AL-FARBEN - Torrecid Group", "booth": "1137", "score": 80, "tier": 2, "rationale": "Specialty pigments/frits; SEM for particle and surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 205, "name": "CONCENTROL USA", "booth": "1477", "score": 80, "tier": 2, "rationale": "Specialty additives; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 206, "name": "Fenchem", "booth": "1570", "score": 80, "tier": 2, "rationale": "Specialty chemicals for coatings; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 207, "name": "GUANGDONG WINDBELL TREE MATERIAL TECHNOLOGY", "booth": "518", "score": 80, "tier": 2, "rationale": "Specialty materials; SEM/XPS for surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 208, "name": "HEBEI DOUBLE BULLS CELLULOSE", "booth": "2490", "score": 80, "tier": 2, "rationale": "Cellulose derivatives; SEM for fiber and particle morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 209, "name": "HEZE YONGHUI COMPOSITE MATERIAL", "booth": "2593", "score": 80, "tier": 2, "rationale": "Composite materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 210, "name": "Meghna Colour", "booth": "3070", "score": 80, "tier": 2, "rationale": "Pigments from Bangladesh; SEM/TEM for particle QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 211, "name": "Nalco Water", "booth": "2456", "score": 80, "tier": 2, "rationale": "Water treatment chemicals; SEM/XPS for scale and deposit characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 212, "name": "Qingdao Hengda Chemical New Material", "booth": "1373", "score": 80, "tier": 2, "rationale": "New materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 213, "name": "Resine Italiane Srl", "booth": "240", "score": 80, "tier": 2, "rationale": "Italian resins; SEM for film morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 214, "name": "Revelli Chemicals", "booth": "2373", "score": 80, "tier": 2, "rationale": "Specialty chemical distribution with technical support", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 215, "name": "SHANDONG YICHEN POLY-MATERIAL", "booth": "976", "score": 80, "tier": 2, "rationale": "Polymer materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 216, "name": "STI Polymer", "booth": "2687", "score": 80, "tier": 2, "rationale": "Specialty polymers; SEM/TEM for morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 217, "name": "Trust Chem USA", "booth": "2976", "score": 80, "tier": 2, "rationale": "Specialty chemicals; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 218, "name": "US Polymers-Accurez", "booth": "2869", "score": 80, "tier": 2, "rationale": "Specialty polymers and resins; SEM/TEM for polymer morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 219, "name": "Zhejiang Chang'an Renheng Technology", "booth": "360", "score": 80, "tier": 2, "rationale": "Specialty technology/chemicals; SEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 220, "name": "Zhonglong Materials", "booth": "2581", "score": 80, "tier": 2, "rationale": "Materials manufacturer; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 221, "name": "WAB GROUP", "booth": "2060", "score": 79, "tier": 2, "rationale": "Lab-scale dispersers and mills; SEM on output samples for R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 222, "name": "Admix", "booth": "2865", "score": 78, "tier": 2, "rationale": "Mixing equipment; SEM on processed samples for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 223, "name": "Akrochem Corporation", "booth": "2478", "score": 78, "tier": 2, "rationale": "Specialty chemicals for rubber/coatings; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 224, "name": "American Colors", "booth": "2154", "score": 78, "tier": 2, "rationale": "Colorant systems; SEM for pigment dispersion characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 225, "name": "Borica", "booth": "2173", "score": 78, "tier": 2, "rationale": "Specialty coatings chemicals; SEM for surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 226, "name": "CINIC Chemicals America", "booth": "3066", "score": 78, "tier": 2, "rationale": "Specialty chemicals; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 227, "name": "Colosperse USA", "booth": "671", "score": 78, "tier": 2, "rationale": "Pigment dispersions; SEM for dispersion quality QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 228, "name": "Custom Milling & Consulting", "booth": "1354", "score": 78, "tier": 2, "rationale": "Milling services; SEM for particle characterization of milled products", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 229, "name": "Dispersion Services", "booth": "1874", "score": 78, "tier": 2, "rationale": "Contract dispersion services; SEM for particle size and dispersion QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 230, "name": "DKSH USA", "booth": "2846", "score": 78, "tier": 2, "rationale": "Specialty chemical distribution with technical support; SEM through customer technical service labs", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 231, "name": "Elinor Coatings", "booth": "1784", "score": 78, "tier": 2, "rationale": "Specialty coatings; SEM for film characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 232, "name": "FTC Korea", "booth": "1171", "score": 78, "tier": 2, "rationale": "Specialty chemicals from Korea; SEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 233, "name": "HANGZHOU COLORING CHEMICAL", "booth": "974", "score": 78, "tier": 2, "rationale": "Pigment and colorant chemicals; SEM for particle QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 234, "name": "ITOCHU Chemicals America", "booth": "1568", "score": 78, "tier": 2, "rationale": "Chemical trading/distribution; SEM through technical support services", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 235, "name": "PT. XINHE PLASTIC SILICONE", "booth": "2283", "score": 78, "tier": 2, "rationale": "Silicone products; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 236, "name": "Quaker Color", "booth": "823", "score": 78, "tier": 2, "rationale": "Colorant systems; SEM for pigment dispersion characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 237, "name": "Runhe Chemical (Guangzhou)", "booth": "320", "score": 78, "tier": 2, "rationale": "Specialty chemicals; SEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 238, "name": "Serkim Reçine", "booth": "3181", "score": 78, "tier": 2, "rationale": "Turkish resins; SEM for film morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 239, "name": "Shanghai Jiuta Chemical", "booth": "1374", "score": 78, "tier": 2, "rationale": "Specialty chemicals; SEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 240, "name": "Shaoguan Dongsen Synthetic Material", "booth": "554", "score": 78, "tier": 2, "rationale": "Synthetic materials; SEM/TEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 241, "name": "SIEHE Group", "booth": "2754", "score": 78, "tier": 2, "rationale": "Specialty chemicals; SEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 242, "name": "Texene", "booth": "640", "score": 78, "tier": 2, "rationale": "Specialty chemicals; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 243, "name": "TSE Industries", "booth": "608", "score": 78, "tier": 2, "rationale": "Custom polymer compounding; SEM for polymer morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 244, "name": "WYNCA", "booth": "3141", "score": 78, "tier": 2, "rationale": "Specialty chemicals from China; SEM for characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 245, "name": "Yibin Tianyuan Haifeng Hetai Co., Ltd", "booth": "2690", "score": 78, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 246, "name": "Zeller Polymer Solutions", "booth": "2576", "score": 78, "tier": 2, "rationale": "Specialty polymers; SEM for film morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 247, "name": "Azelis Americas CASE", "booth": "1737", "score": 77, "tier": 2, "rationale": "Specialty chemical distribution; SEM through technical support for customers", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 248, "name": "Polimer Ar Ge Plastik", "booth": "1174", "score": 77, "tier": 2, "rationale": "Polymer R&D from Turkey; SEM/TEM for polymer characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 249, "name": "Aditya Birla Chemicals Advanced Materials", "booth": "746", "score": 76, "tier": 2, "rationale": "Specialty chemical or additive company; moderate SEM/XPS relevance for product R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 250, "name": "AGC Chemicals Americas", "booth": "2159", "score": 76, "tier": 2, "rationale": "Specialty chemical or additive company; moderate SEM/XPS relevance for product R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 251, "name": "AKPA Kimya Ambalaj ve Sanayi Ticaret A. S.", "booth": "2273", "score": 76, "tier": 2, "rationale": "Turkish chemicals; limited direct SEM need", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 252, "name": "ALFA KIMYA A.S.", "booth": "2430", "score": 76, "tier": 2, "rationale": "Specialty chemicals from Turkey; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 253, "name": "Ambyth Chemical Company", "booth": "1772", "score": 76, "tier": 2, "rationale": "Specialty chemical or additive company; moderate SEM/XPS relevance for product R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 254, "name": "Bepex", "booth": "769", "score": 76, "tier": 2, "rationale": "Size reduction and process equipment; SEM on processed materials", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 255, "name": "Dura Chemicals", "booth": "830", "score": 76, "tier": 2, "rationale": "Specialty chemical or additive company; moderate SEM/XPS relevance for product R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 256, "name": "Eagle Chemicals", "booth": "1982", "score": 76, "tier": 2, "rationale": "Specialty chemical or additive company; moderate SEM/XPS relevance for product R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 257, "name": "EPY S.R.L.", "booth": "234", "score": 76, "tier": 2, "rationale": "Italian specialty chemicals; SEM/XPS for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 258, "name": "HANGZHOU ZEALAN CHEMICAL", "booth": "519", "score": 76, "tier": 2, "rationale": "Specialty chemicals; SEM for surface characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 259, "name": "hubergroup Chemicals", "booth": "618", "score": 76, "tier": 2, "rationale": "Specialty chemical or additive company; moderate SEM/XPS relevance for product R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 260, "name": "IMCD US", "booth": "2729", "score": 76, "tier": 2, "rationale": "Specialty chemical distribution; SEM/XPS indirectly through supplier relationships", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 261, "name": "InterAtlas Chemical", "booth": "2430", "score": 76, "tier": 2, "rationale": "Specialty chemical or additive company; moderate SEM/XPS relevance for product R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 262, "name": "Jiangxi Longhai Chemical", "booth": "218", "score": 76, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 263, "name": "Runtai Chemical (Taixing)", "booth": "2587", "score": 76, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 264, "name": "Shandong Exceris Chemical", "booth": "2591", "score": 76, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 265, "name": "ystral gmbh maschinenbau + processtechnik", "booth": "2568", "score": 76, "tier": 2, "rationale": "Mixing/dispersing; SEM for output sample QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 266, "name": "Zhejiang Sainon Chemical", "booth": "418", "score": 76, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 267, "name": "Calumet", "booth": "2558", "score": 75, "tier": 2, "rationale": "Specialty hydrocarbons and waxes; SEM/XPS for surface wax crystal analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 268, "name": "Delaware Paint Company", "booth": "2177", "score": 75, "tier": 2, "rationale": "Paint manufacturer; SEM for film morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 269, "name": "Diamond Vogel", "booth": "604", "score": 75, "tier": 2, "rationale": "Paint manufacturer; SEM for film characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 270, "name": "National Polymer", "booth": "706", "score": 75, "tier": 2, "rationale": "Specialty polymers; SEM for morphology", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 271, "name": "Prom USA", "booth": "2160", "score": 75, "tier": 2, "rationale": "Specialty chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 272, "name": "Royce", "booth": "445", "score": 75, "tier": 2, "rationale": "Specialty chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 273, "name": "Sarchem Kimya San. Ve Tic. A.S.", "booth": "666", "score": 75, "tier": 2, "rationale": "Turkish specialty chemicals; moderate SEM use", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 274, "name": "Shandong Hefeng Chemical", "booth": "864", "score": 75, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 275, "name": "Tennants Textile Colours", "booth": "3069", "score": 75, "tier": 2, "rationale": "Textile colorants; SEM for fiber surface analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 276, "name": "Tulco", "booth": "2547", "score": 75, "tier": 2, "rationale": "Specialty chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 277, "name": "HENAN XUNYU CHEMICAL", "booth": "2960", "score": 74, "tier": 2, "rationale": "Specialty chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 278, "name": "Ningxia Jinghong Chemical", "booth": "867", "score": 74, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 279, "name": "Oliver Y Batlle S.A.U.", "booth": "453", "score": 74, "tier": 2, "rationale": "Bead mills and dispersers; SEM on ground samples", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 280, "name": "Palmer Holland", "booth": "2039", "score": 74, "tier": 2, "rationale": "Specialty ingredient distribution; moderate indirect SEM need for technical support", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 281, "name": "Ravago Chemicals North America", "booth": "2354", "score": 74, "tier": 2, "rationale": "Polymer distribution; limited direct SEM use", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 282, "name": "Schold Manufacturing", "booth": "1129", "score": 74, "tier": 2, "rationale": "Industrial mixers; SEM for validation of dispersed samples", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 283, "name": "SHANDONG YUESHANG CHEMICAL", "booth": "2589", "score": 74, "tier": 2, "rationale": "Specialty chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 284, "name": "StarChem USA", "booth": "1166", "score": 74, "tier": 2, "rationale": "Specialty chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 285, "name": "Univar Solutions", "booth": "2229", "score": 74, "tier": 2, "rationale": "Chemical distribution; limited direct R&D instrumentation", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 286, "name": "Weifang Yukai Chemical", "booth": "3168", "score": 74, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 287, "name": "YUEYANG ZHONGZHAN TECHNOLOGY", "booth": "772", "score": 74, "tier": 2, "rationale": "Technology/chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 288, "name": "Ace Glass", "booth": "1977", "score": 72, "tier": 2, "rationale": "Scientific glassware; limited direct SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 289, "name": "Applied Material Solutions", "booth": "2789", "score": 72, "tier": 2, "rationale": "Applied materials; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 290, "name": "BCH North America", "booth": "1072", "score": 72, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 291, "name": "Brilliant Group", "booth": "1153", "score": 72, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 292, "name": "Chemicals Incorporated", "booth": "154", "score": 72, "tier": 2, "rationale": "Chemical manufacturer/distributor; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 293, "name": "EMCO", "booth": "1546", "score": 72, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 294, "name": "Fanti USA", "booth": "1265", "score": 72, "tier": 2, "rationale": "Chemical distributor; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 295, "name": "Gantrade Corporation", "booth": "2959", "score": 72, "tier": 2, "rationale": "Chemical distribution; limited direct SEM need", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 296, "name": "Gehring Montgomery", "booth": "2046", "score": 72, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 297, "name": "Haver & Boecker", "booth": "323", "score": 72, "tier": 2, "rationale": "Sieving and screening equipment; SEM for particle shape validation", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 298, "name": "HMJ tech", "booth": "2654", "score": 72, "tier": 2, "rationale": "Technology company; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 299, "name": "HV2 Custom Grinding and Processing Company", "booth": "628", "score": 72, "tier": 2, "rationale": "Grinding services; SEM for particle size verification", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 300, "name": "Lintech International", "booth": "754", "score": 72, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 301, "name": "Nordmann Global", "booth": "717", "score": 72, "tier": 2, "rationale": "Chemical distribution; limited direct SEM/XPS need", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 302, "name": "Powder Processing and Technology", "booth": "568", "score": 72, "tier": 2, "rationale": "Contract processing; SEM for particle characterization QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 303, "name": "QCI Britannic", "booth": "605", "score": 72, "tier": 2, "rationale": "Chemical consulting; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 304, "name": "Redox", "booth": "560", "score": 72, "tier": 2, "rationale": "Chemical distribution; limited direct R&D", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 305, "name": "Regent Paints", "booth": "2786", "score": 72, "tier": 2, "rationale": "Paint manufacturer; SEM for film characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 306, "name": "Ruichem USA", "booth": "2178", "score": 72, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 307, "name": "SHENZHEN XUHUA BIOTECHNOLOGY CO., LTD.", "booth": "2965", "score": 72, "tier": 2, "rationale": "Biotechnology/chemistry; SEM for material characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 308, "name": "SYNORM CHEMICAL", "booth": "871", "score": 72, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 309, "name": "Teckrez", "booth": "807", "score": 72, "tier": 2, "rationale": "Specialty resins; SEM for film characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 310, "name": "The Chemical Company", "booth": "1554", "score": 72, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 311, "name": "Trucent Renewable Chemicals", "booth": "227", "score": 72, "tier": 2, "rationale": "Renewable chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 312, "name": "United Mineral & Chemical Corporation", "booth": "2646", "score": 72, "tier": 2, "rationale": "Mineral distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 313, "name": "USI Chemical America", "booth": "2766", "score": 72, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 314, "name": "VEGA CHEMICALS PRIVATE LIMITED", "booth": "723", "score": 72, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 315, "name": "Yamada America", "booth": "241", "score": 72, "tier": 2, "rationale": "Pumps; limited direct SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 316, "name": "Zeppelin Systems, USA", "booth": "236", "score": 72, "tier": 2, "rationale": "Bulk handling systems; limited direct SEM use", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 317, "name": "Custom Processing Services", "booth": "1665", "score": 71, "tier": 2, "rationale": "Contract processing; SEM for QC of processed materials", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 318, "name": "Aal Chem", "booth": "2340", "score": 70, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 319, "name": "BOOM INDUSTRY(SH)", "booth": "876", "score": 70, "tier": 2, "rationale": "Industrial chemicals from China; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 320, "name": "Chemformation", "booth": "1269", "score": 70, "tier": 2, "rationale": "Chemical procurement platform; no direct SEM need", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 321, "name": "ddchem", "booth": "1775", "score": 70, "tier": 2, "rationale": "Specialty chemicals; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 322, "name": "Korechem", "booth": "1078", "score": 70, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 323, "name": "MING-ZU CHEMICAL INDUSTRY", "booth": "319", "score": 70, "tier": 2, "rationale": "Chemical manufacturer; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 324, "name": "Mixron", "booth": "466", "score": 70, "tier": 2, "rationale": "Mixing equipment; SEM on processed samples", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 325, "name": "MXD Process", "booth": "3065", "score": 70, "tier": 2, "rationale": "Process equipment; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 326, "name": "Neuman Esser", "booth": "1667", "score": 70, "tier": 2, "rationale": "Compressors and mills; SEM for processed material characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 327, "name": "Protective Lining", "booth": "870", "score": 70, "tier": 2, "rationale": "Protective coatings; SEM for film and adhesion analysis", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 328, "name": "ProxChem America", "booth": "1959", "score": 70, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 329, "name": "Pulva Corporation", "booth": "1277", "score": 70, "tier": 2, "rationale": "Grinding equipment; SEM for particle characterization", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 330, "name": "Standard Colors", "booth": "2753", "score": 70, "tier": 2, "rationale": "Colorants; SEM for pigment QC", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 331, "name": "Van Horn, Metz & Company", "booth": "1280", "score": 70, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 332, "name": "Visnex Chemicals Corporation", "booth": "2882", "score": 70, "tier": 2, "rationale": "Chemical distribution; moderate SEM relevance", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 333, "name": "Wego Chemical Group", "booth": "653", "score": 70, "tier": 2, "rationale": "Chemical trading; minimal direct SEM use", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}, {"rank": 334, "name": "Yufeng America Corporation", "booth": "3082", "score": 70, "tier": 2, "rationale": "Chemical distribution; limited direct SEM", "opp": "", "instrument": "", "contact": "", "email": "", "am": "", "notes": ""}];
 
-// ── STATE ────────────────────────────────────────────────────
-let custom = [];
-let notes = [];
-let activeTab = 'companies';
-let curCompany = null;
-let selInterest = '';
-let selFollowup = '';
-let editId = null;
-let newTier = 2;
-let activeFilter = 'all';
-let ANTHROPIC_API_KEY = '';
 
-function allCompanies() {
-  return [...custom, ...BASE].sort((a,b)=>b.score-a.score);
-}
+let custom = [], notes = [], activeTab = 'companies', curCompany = null;
+let selInterest = '', selFollowup = '', editId = null, newTier = 2, activeFilter = 'all';
 
-// ── INIT ─────────────────────────────────────────────────────
+function allCompanies() { return [...custom, ...BASE].sort((a,b)=>b.score-a.score); }
+
 function init() {
   notes = JSON.parse(localStorage.getItem('coat26_notes')||'[]');
   custom = JSON.parse(localStorage.getItem('coat26_custom')||'[]');
-  const url = localStorage.getItem('coat26_url')||'';
-  const key = localStorage.getItem('coat26_key')||'';
-  document.getElementById('scriptUrlInput').value = url;
-  document.getElementById('apiKeyInput').value = key;
-  ANTHROPIC_API_KEY = key;
+  document.getElementById('scriptUrlInput').value = localStorage.getItem('coat26_url')||'';
+  document.getElementById('apiKeyInput').value = localStorage.getItem('coat26_key')||'';
   renderCompanies(getFiltered());
   buildRoute();
   updateBadge();
   updateStats();
+  setupListeners();
 }
 
-// ── TABS ─────────────────────────────────────────────────────
+function setupListeners() {
+  // Nav buttons
+  document.getElementById('nav-companies').addEventListener('click', () => switchTab('companies'));
+  document.getElementById('nav-route').addEventListener('click', () => switchTab('route'));
+  document.getElementById('nav-notes').addEventListener('click', () => switchTab('notes'));
+  document.getElementById('nav-speakers').addEventListener('click', () => switchTab('speakers'));
+  document.getElementById('nav-sync').addEventListener('click', () => switchTab('sync'));
+
+  // Header sync button
+  document.querySelector('.sync-btn').addEventListener('click', () => switchTab('sync'));
+
+  // Search
+  document.getElementById('searchInput').addEventListener('input', filterCompanies);
+
+  // Filter chips
+  document.getElementById('chip-all').addEventListener('click', () => setFilter('all'));
+  document.getElementById('chip-t1').addEventListener('click', () => setFilter('t1'));
+  document.getElementById('chip-t2').addEventListener('click', () => setFilter('t2'));
+  document.getElementById('chip-crm').addEventListener('click', () => setFilter('crm'));
+  document.getElementById('chip-ta').addEventListener('click', () => setFilter('ta'));
+
+  // Add button
+  document.querySelector('.add-btn').addEventListener('click', openAddModal);
+
+  // Company list - event delegation (handles apostrophes in names)
+  document.getElementById('companyList').addEventListener('click', e => {
+    const card = e.target.closest('.co-card');
+    if (card) openForm(card.dataset.name);
+  });
+
+  // Route list - event delegation
+  document.getElementById('route-day1').addEventListener('click', e => {
+    const stop = e.target.closest('.route-stop');
+    if (stop) openForm(stop.dataset.name);
+  });
+  document.getElementById('route-day2').addEventListener('click', e => {
+    const stop = e.target.closest('.route-stop');
+    if (stop) openForm(stop.dataset.name);
+  });
+  document.getElementById('route-day3').addEventListener('click', e => {
+    const stop = e.target.closest('.route-stop');
+    if (stop) openForm(stop.dataset.name);
+  });
+
+  // Form back button
+  document.querySelector('.back-btn').addEventListener('click', closeForm);
+
+  // Scan button
+  document.getElementById('scanBtn').addEventListener('click', () => document.getElementById('cardInput').click());
+  document.getElementById('cardInput').addEventListener('change', handleCardPhoto);
+
+  // Interest chips
+  document.querySelectorAll('#interestChips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const val = chip.textContent.trim();
+      const cls = val === '🔥 Hot' ? 'c-hot' : val === '👍 Warm' ? 'c-warm' : 'c-cold';
+      pickChip('interest', val, chip, cls);
+    });
+  });
+
+  // Followup chips
+  document.querySelectorAll('#followupChips .chip').forEach(chip => {
+    chip.addEventListener('click', () => pickChip('followup', chip.textContent.trim(), chip, 'c-fu'));
+  });
+
+  // Save note
+  document.querySelector('.save-btn').addEventListener('click', saveNote);
+
+  // Sync button
+  document.getElementById('syncMainBtn').addEventListener('click', syncNotes);
+
+  // Settings buttons
+  document.getElementById('saveApiBtn').addEventListener('click', saveApiKey);
+  document.getElementById('saveUrlBtn').addEventListener('click', saveScriptUrl);
+
+  // Add modal
+  document.getElementById('addModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('addModal')) closeAddModal();
+  });
+  document.getElementById('closeModalBtn').addEventListener('click', closeAddModal);
+  document.getElementById('topt1').addEventListener('click', () => pickTier(1));
+  document.getElementById('topt2').addEventListener('click', () => pickTier(2));
+  document.getElementById('confirmAddBtn').addEventListener('click', confirmAddCompany);
+}
+
 function switchTab(tab) {
   activeTab = tab;
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nbtn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-'+tab).classList.add('active');
   document.getElementById('nav-'+tab).classList.add('active');
-  if(tab==='notes') renderNotes();
-  if(tab==='sync') updateStats();
+  if (tab === 'notes') renderNotes();
+  if (tab === 'sync') updateStats();
 }
 
-// ── FILTER ───────────────────────────────────────────────────
 function setFilter(f) {
   activeFilter = f;
-  ['all','t1','t2','crm','ta'].forEach(id=>{
+  ['all','t1','t2','crm','ta'].forEach(id => {
     const el = document.getElementById('chip-'+id);
-    if(!el) return;
+    if (!el) return;
     el.className = 'fchip';
-    if(id===f) {
-      if(f==='t1') el.classList.add('active-t1');
-      else if(f==='t2') el.classList.add('active-t2');
-      else if(f==='crm'||f==='ta') el.classList.add('active-crm');
-      else { el.style.background='var(--accent-pale)'; el.style.color='var(--accent)'; el.style.borderColor='rgba(232,112,58,.4)'; return; }
-    } else {
-      el.style.background=''; el.style.color=''; el.style.borderColor='';
+    el.style.background = ''; el.style.color = ''; el.style.borderColor = '';
+    if (id === f) {
+      if (f==='t1') el.classList.add('active-t1');
+      else if (f==='t2') el.classList.add('active-t2');
+      else if (f==='crm'||f==='ta') el.classList.add('active-crm');
+      else { el.style.background='var(--accent-pale)'; el.style.color='var(--accent)'; el.style.borderColor='rgba(232,112,58,.4)'; }
     }
   });
   renderCompanies(getFiltered());
@@ -562,46 +630,44 @@ function setFilter(f) {
 function getFiltered() {
   let list = allCompanies();
   const q = document.getElementById('searchInput').value.toLowerCase().trim();
-  if(q) list = list.filter(c=>c.name.toLowerCase().includes(q));
-  if(activeFilter==='t1') list = list.filter(c=>c.tier===1);
-  else if(activeFilter==='t2') list = list.filter(c=>c.tier===2);
-  else if(activeFilter==='crm') list = list.filter(c=>c.opp||c.contact);
-  else if(activeFilter==='ta') list = list.filter(c=>c.am==='TA');
+  if (q) list = list.filter(c => c.name.toLowerCase().includes(q));
+  if (activeFilter==='t1') list = list.filter(c => c.tier===1);
+  else if (activeFilter==='t2') list = list.filter(c => c.tier===2);
+  else if (activeFilter==='crm') list = list.filter(c => c.opp||c.contact);
+  else if (activeFilter==='ta') list = list.filter(c => c.am==='TA');
   return list;
 }
 
 function filterCompanies() { renderCompanies(getFiltered()); }
 
-// ── RENDER COMPANIES ─────────────────────────────────────────
 function renderCompanies(list) {
   const el = document.getElementById('companyList');
-  if(!list.length){
-    el.innerHTML='<div class="empty-state"><div class="empty-ico">🔍</div><div>No companies found</div></div>';
-    return;
-  }
-  el.innerHTML = list.map(c=>{
-    const nc = notes.filter(n=>n.company===c.name).length;
+  if (!list.length) { el.innerHTML='<div class="empty-state"><div class="empty-ico">🔍</div><div>No companies found</div></div>'; return; }
+  el.innerHTML = list.map(c => {
+    const nc = notes.filter(n => n.company===c.name).length;
     const hasCRM = !!(c.opp||c.contact);
     const sc = c.score>=90?'sg':c.score>=75?'sa':'sr';
     const tl = c.tier===1?'★ T1':'▲ T2';
     const tc = c.tier===1?'t1b':'t2b';
-    const safeName = c.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-    const amBadge = (c.am==='TA')?'<span class="am-tag">TA</span>':
-                    (c.am==='MS')?'<span class="am-tag" style="background:rgba(77,157,224,.15);color:var(--blue);">MS</span>':
-                    (c.am==='LW')?'<span class="am-tag" style="background:rgba(67,217,140,.12);color:var(--green);">LW</span>':'';
+    const amBadge = c.am==='TA' ? '<span class="am-tag">TA</span>' :
+                    c.am==='MS' ? '<span class="am-tag" style="background:rgba(77,157,224,.15);color:var(--blue);">MS</span>' :
+                    c.am==='LW' ? '<span class="am-tag" style="background:rgba(67,217,140,.12);color:var(--green);">LW</span>' :
+                    c.am==='DG' ? '<span class="am-tag" style="background:rgba(180,127,232,.15);color:var(--purple);">DG</span>' : '';
     let cls = 'co-card';
-    if(nc) cls += ' has-notes';
-    else if(hasCRM) cls += ' has-crm';
-    return `<div class="${cls}" onclick="openForm('${safeName}')">
+    if (nc) cls += ' has-notes';
+    else if (hasCRM) cls += ' has-crm';
+    // Use data-name attribute instead of onclick to avoid apostrophe issues
+    const safeName = c.name.replace(/"/g,'&quot;');
+    return `<div class="${cls}" data-name="${safeName}">
       <div class="score-circle ${sc}">${c.score}</div>
       <div class="co-info">
         <div class="co-name">${c.name}${amBadge}</div>
         <div class="co-meta">
           <span class="tbadge ${tc}">${tl}</span>
-          ${c.booth?`<span class="booth-pill">📍 ${c.booth}</span>`:''}
-          ${hasCRM?'<span class="crm-badge">🔑 CRM</span>':''} 
-          ${c.custom?'<span class="crm-badge" style="background:rgba(180,127,232,.12);color:var(--purple);">✦ Floor find</span>':''} 
-          ${nc?`<span class="note-dot">📝 ${nc}</span>`:''} 
+          ${c.booth ? `<span class="booth-pill">📍 ${c.booth}</span>` : ''}
+          ${hasCRM ? '<span class="crm-badge">🔑 CRM</span>' : ''}
+          ${c.custom ? '<span class="crm-badge" style="background:rgba(180,127,232,.12);color:var(--purple);">✦ Floor find</span>' : ''}
+          ${nc ? `<span class="note-dot">📝 ${nc}</span>` : ''}
         </div>
       </div>
       <span class="chevron">›</span>
@@ -609,23 +675,21 @@ function renderCompanies(list) {
   }).join('');
 }
 
-// ── ROUTE BUILDER ─────────────────────────────────────────────
 function buildRoute() {
-  // Smart route: split Tier 1 (with booth) across 3 days by booth number clusters
-  const t1 = BASE.filter(c=>c.tier===1&&c.booth).sort((a,b)=>parseInt(a.booth)-parseInt(b.booth));
+  const t1 = BASE.filter(c => c.tier===1 && c.booth && c.booth !== 'nan').sort((a,b) => parseInt(a.booth)-parseInt(b.booth));
   const perDay = Math.ceil(t1.length/3);
   const days = [t1.slice(0,perDay), t1.slice(perDay,perDay*2), t1.slice(perDay*2)];
-  days.forEach((day,di)=>{
+  days.forEach((day, di) => {
     const el = document.getElementById('route-day'+(di+1));
-    if(!day.length){el.innerHTML='<div class="empty-state" style="padding:20px;"><div>No booths assigned for this day yet.</div></div>';return;}
-    el.innerHTML = day.map((c,i)=>{
-      const safeName = c.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-      const nc = notes.filter(n=>n.company===c.name).length;
-      return `<div class="route-stop" onclick="openForm('${safeName}')">
+    if (!day.length) { el.innerHTML='<div class="empty-state" style="padding:20px;"><div>No booths for this day.</div></div>'; return; }
+    el.innerHTML = day.map((c,i) => {
+      const nc = notes.filter(n => n.company===c.name).length;
+      const safeName = c.name.replace(/"/g,'&quot;');
+      return `<div class="route-stop" data-name="${safeName}">
         <div class="stop-num">${i+1}</div>
         <div class="stop-info">
           <div class="stop-name">${c.name}</div>
-          <div class="stop-meta">📍 Booth ${c.booth} · Score ${c.score}${nc?' · ✅ Visited':''}</div>
+          <div class="stop-meta">📍 Booth ${c.booth} · Score ${c.score}${nc ? ' · ✅ Visited' : ''}</div>
         </div>
         <span class="chevron">›</span>
       </div>`;
@@ -633,95 +697,79 @@ function buildRoute() {
   });
 }
 
-// ── ADD COMPANY MODAL ────────────────────────────────────────
 function openAddModal() {
-  newTier=2;
-  document.getElementById('newName').value='';
-  document.getElementById('newBooth').value='';
-  document.getElementById('newScore').value='';
-  document.getElementById('newReason').value='';
-  ['topt1','topt2'].forEach(id=>document.getElementById(id).className='topt');
-  document.getElementById('topt2').className='topt sel-t2';
+  newTier = 2;
+  document.getElementById('newName').value = '';
+  document.getElementById('newBooth').value = '';
+  document.getElementById('newScore').value = '';
+  document.getElementById('newReason').value = '';
+  document.getElementById('topt1').className = 'topt';
+  document.getElementById('topt2').className = 'topt sel-t2';
   document.getElementById('addModal').classList.add('open');
-  setTimeout(()=>document.getElementById('newName').focus(),200);
+  setTimeout(() => document.getElementById('newName').focus(), 200);
 }
-function closeAddModal(e) {
-  if(e&&e.target!==document.getElementById('addModal')) return;
-  document.getElementById('addModal').classList.remove('open');
-}
+function closeAddModal() { document.getElementById('addModal').classList.remove('open'); }
 function pickTier(t) {
-  newTier=t;
-  ['topt1','topt2'].forEach((id,i)=>{document.getElementById(id).className='topt'+(i+1===t?' sel-t'+(i+1):'');});
+  newTier = t;
+  document.getElementById('topt1').className = 'topt' + (t===1?' sel-t1':'');
+  document.getElementById('topt2').className = 'topt' + (t===2?' sel-t2':'');
 }
 function confirmAddCompany() {
-  const name=document.getElementById('newName').value.trim();
-  if(!name){alert('Please enter a company name.');return;}
-  if(allCompanies().find(c=>c.name.toLowerCase()===name.toLowerCase())){alert('Already in list.');return;}
-  const score=parseInt(document.getElementById('newScore').value)||70;
-  const booth=document.getElementById('newBooth').value.trim()||'TBD';
-  const reason=document.getElementById('newReason').value.trim();
-  const co={name,tier:newTier,score:Math.min(100,Math.max(1,score)),booth,opp:'',contact:'',email:'',am:'',notes:reason,rationale:reason,instrument:'',custom:true};
+  const name = document.getElementById('newName').value.trim();
+  if (!name) { alert('Please enter a company name.'); return; }
+  if (allCompanies().find(c => c.name.toLowerCase()===name.toLowerCase())) { alert('Already in list.'); return; }
+  const score = parseInt(document.getElementById('newScore').value)||70;
+  const booth = document.getElementById('newBooth').value.trim()||'TBD';
+  const reason = document.getElementById('newReason').value.trim();
+  const co = {name, tier:newTier, score:Math.min(100,Math.max(1,score)), booth, opp:'', contact:'', email:'', am:'', notes:reason, rationale:reason, instrument:'', custom:true};
   custom.unshift(co);
-  localStorage.setItem('coat26_custom',JSON.stringify(custom));
-  document.getElementById('addModal').classList.remove('open');
+  localStorage.setItem('coat26_custom', JSON.stringify(custom));
+  closeAddModal();
   filterCompanies();
-  showToast('✦ '+name+' added!');
-  setTimeout(()=>openForm(name),300);
+  showToast('✦ ' + name + ' added!');
+  setTimeout(() => openForm(name), 300);
 }
 
-// ── FORM ─────────────────────────────────────────────────────
 function resetForm() {
-  document.getElementById('fName').value='';
-  document.getElementById('fTitle').value='';
-  document.getElementById('fEmail').value='';
-  document.getElementById('fPhone').value='';
-  document.getElementById('fSummary').value='';
+  ['fName','fTitle','fEmail','fPhone','fSummary'].forEach(id => document.getElementById(id).value='');
   selInterest=''; selFollowup=''; editId=null;
-  document.querySelectorAll('#interestChips .chip').forEach(c=>c.className='chip');
-  document.querySelectorAll('#followupChips .chip').forEach(c=>c.className='chip');
+  document.querySelectorAll('#interestChips .chip').forEach(c => c.className='chip');
+  document.querySelectorAll('#followupChips .chip').forEach(c => c.className='chip');
   document.getElementById('cardPreview').style.display='none';
   document.getElementById('cardInput').value='';
-  const btn=document.getElementById('scanBtn');
+  const btn = document.getElementById('scanBtn');
   btn.className='scan-btn'; btn.style.borderColor=''; btn.style.color='';
   btn.textContent='📷 Scan Business Card — auto-fill below';
   document.getElementById('saveBtnLbl').textContent='💾 Save Note Locally';
 }
 
 function openForm(name) {
-  const co=allCompanies().find(c=>c.name===name);
-  if(!co) return;
-  curCompany=co;
+  const co = allCompanies().find(c => c.name===name);
+  if (!co) return;
+  curCompany = co;
   resetForm();
-  document.getElementById('formCoName').textContent=co.name;
-  const tl=co.tier===1?'★ Tier 1 · Score '+co.score:'▲ Tier 2 · Score '+co.score;
-  const amStr=co.am?' · AM: '+co.am:'';
-  document.getElementById('formCoMeta').textContent=tl+amStr+(co.custom?' · ✦ Floor find':'');
-
-  // Booth
-  const bb=document.getElementById('boothBanner');
-  if(co.booth&&co.booth!=='TBD'&&co.booth!=='nan'){
+  document.getElementById('formCoName').textContent = co.name;
+  const amStr = co.am ? ' · AM: '+co.am : '';
+  document.getElementById('formCoMeta').textContent = (co.tier===1?'★ Tier 1':'▲ Tier 2') + ' · Score ' + co.score + amStr + (co.custom?' · ✦ Floor find':'');
+  const bb = document.getElementById('boothBanner');
+  if (co.booth && co.booth!=='TBD' && co.booth!=='nan') {
     bb.style.display='flex'; document.getElementById('boothNum').textContent=co.booth;
   } else { bb.style.display='none'; }
-
-  // CRM
-  const crmPanel=document.getElementById('crmPanel');
-  const crmContent=document.getElementById('crmContent');
-  if(co.opp||co.contact||co.instrument||co.notes){
+  const crmPanel = document.getElementById('crmPanel');
+  const crmContent = document.getElementById('crmContent');
+  if (co.opp||co.contact||co.instrument||co.notes) {
     crmPanel.style.display='block';
-    let html='';
-    if(co.opp&&co.opp!=='NONE') html+=`<div class="crm-row"><span class="crm-label">OPP #</span><span class="crm-val">${co.opp}</span></div>`;
-    if(co.instrument) html+=`<div class="crm-row"><span class="crm-label">Instrument</span><span class="crm-val">${co.instrument}</span></div>`;
-    if(co.contact) html+=`<div class="crm-row"><span class="crm-label">Contact</span><span class="crm-val">${co.contact}${co.email?' · '+co.email:''}</span></div>`;
-    if(co.am) html+=`<div class="crm-row"><span class="crm-label">Account Mgr</span><span class="crm-val">${co.am}</span></div>`;
-    if(co.notes) html+=`<div class="crm-row"><span class="crm-label">CRM Notes</span><span class="crm-val">${co.notes}</span></div>`;
-    crmContent.innerHTML=html;
+    let h='';
+    if (co.opp&&co.opp!=='NONE') h+=`<div class="crm-row"><span class="crm-label">OPP #</span><span class="crm-val">${co.opp}</span></div>`;
+    if (co.instrument) h+=`<div class="crm-row"><span class="crm-label">Instrument</span><span class="crm-val">${co.instrument}</span></div>`;
+    if (co.contact) h+=`<div class="crm-row"><span class="crm-label">Contact</span><span class="crm-val">${co.contact}${co.email?' · '+co.email:''}</span></div>`;
+    if (co.am) h+=`<div class="crm-row"><span class="crm-label">Acct Mgr</span><span class="crm-val">${co.am}</span></div>`;
+    if (co.notes) h+=`<div class="crm-row"><span class="crm-label">CRM Notes</span><span class="crm-val">${co.notes}</span></div>`;
+    crmContent.innerHTML=h;
   } else { crmPanel.style.display='none'; }
-
-  // Rationale
-  const rb=document.getElementById('rationaleBox');
-  if(co.rationale){rb.style.display='block';rb.textContent='💡 '+co.rationale;}
-  else{rb.style.display='none';}
-
+  const rb = document.getElementById('rationaleBox');
+  if (co.rationale) { rb.style.display='block'; rb.textContent='💡 '+co.rationale; }
+  else { rb.style.display='none'; }
   document.getElementById('formPanel').classList.add('open');
 }
 
@@ -730,72 +778,61 @@ function closeForm() {
   curCompany=null; editId=null;
 }
 
-function pickChip(type,val,el,cls) {
-  if(type==='interest'){selInterest=val;document.querySelectorAll('#interestChips .chip').forEach(c=>c.className='chip');}
-  else{selFollowup=val;document.querySelectorAll('#followupChips .chip').forEach(c=>c.className='chip');}
+function pickChip(type, val, el, cls) {
+  if (type==='interest') { selInterest=val; document.querySelectorAll('#interestChips .chip').forEach(c=>c.className='chip'); }
+  else { selFollowup=val; document.querySelectorAll('#followupChips .chip').forEach(c=>c.className='chip'); }
   el.className='chip '+cls;
 }
 
 function saveNote() {
-  if(!curCompany) return;
-  const summary=document.getElementById('fSummary').value.trim();
-  if(!summary&&!selInterest){alert('Please add a note or select interest level.');return;}
-  if(editId){
-    notes=notes.map(n=>n.id===editId?{...n,
+  if (!curCompany) return;
+  const summary = document.getElementById('fSummary').value.trim();
+  if (!summary&&!selInterest) { alert('Please add a note or select interest level.'); return; }
+  if (editId) {
+    notes = notes.map(n => n.id===editId ? {...n,
       contactName:document.getElementById('fName').value.trim(),
       contactTitle:document.getElementById('fTitle').value.trim(),
       contactEmail:document.getElementById('fEmail').value.trim(),
       contactPhone:document.getElementById('fPhone').value.trim(),
       interestLevel:selInterest||n.interestLevel,
       followUp:selFollowup||n.followUp,
-      summary:summary||n.summary,
-      synced:false
-    }:n);
+      summary:summary||n.summary, synced:false
+    } : n);
   } else {
-    const now=new Date();
-    const vt=now.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    const vt = new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
     notes.push({
-      id:Date.now().toString(),
-      company:curCompany.name,
-      tier:curCompany.tier===1?'★ Tier 1':'▲ Tier 2',
-      score:curCompany.score,
-      booth:curCompany.booth||'',
-      opp:curCompany.opp||'',
-      am:curCompany.am||'',
+      id:Date.now().toString(), company:curCompany.name,
+      tier:curCompany.tier===1?'★ Tier 1':'▲ Tier 2', score:curCompany.score,
+      booth:curCompany.booth||'', opp:curCompany.opp||'', am:curCompany.am||'',
       contactName:document.getElementById('fName').value.trim(),
       contactTitle:document.getElementById('fTitle').value.trim(),
       contactEmail:document.getElementById('fEmail').value.trim(),
       contactPhone:document.getElementById('fPhone').value.trim(),
-      interestLevel:selInterest,
-      followUp:selFollowup,
-      summary:summary,
-      visitTime:vt,
-      synced:false
+      interestLevel:selInterest, followUp:selFollowup, summary, visitTime:vt, synced:false
     });
   }
-  localStorage.setItem('coat26_notes',JSON.stringify(notes));
+  localStorage.setItem('coat26_notes', JSON.stringify(notes));
   updateBadge(); updateStats(); closeForm(); filterCompanies(); buildRoute();
-  showToast(editId?'✏️ Note updated!':'✅ Note saved!');
+  showToast(editId ? '✏️ Note updated!' : '✅ Note saved!');
 }
 
 function editNote(id) {
-  const n=notes.find(x=>x.id===id);
-  if(!n) return;
-  const co=allCompanies().find(c=>c.name===n.company);
-  if(!co) return;
-  curCompany=co; editId=id;
-  selInterest=n.interestLevel||''; selFollowup=n.followUp||'';
+  const n = notes.find(x => x.id===id);
+  if (!n) return;
+  const co = allCompanies().find(c => c.name===n.company);
+  if (!co) return;
+  curCompany=co; editId=id; selInterest=n.interestLevel||''; selFollowup=n.followUp||'';
   resetForm(); editId=id;
   document.getElementById('fName').value=n.contactName||'';
   document.getElementById('fTitle').value=n.contactTitle||'';
   document.getElementById('fEmail').value=n.contactEmail||'';
   document.getElementById('fPhone').value=n.contactPhone||'';
   document.getElementById('fSummary').value=n.summary||'';
-  if(n.interestLevel){
-    const cls=n.interestLevel==='🔥 Hot'?'c-hot':n.interestLevel==='👍 Warm'?'c-warm':'c-cold';
-    document.querySelectorAll('#interestChips .chip').forEach(c=>{if(c.textContent.trim()===n.interestLevel)c.className='chip '+cls;});
+  if (n.interestLevel) {
+    const cls = n.interestLevel==='🔥 Hot'?'c-hot':n.interestLevel==='👍 Warm'?'c-warm':'c-cold';
+    document.querySelectorAll('#interestChips .chip').forEach(c=>{if(c.textContent.trim()===n.interestLevel) c.className='chip '+cls;});
   }
-  if(n.followUp){document.querySelectorAll('#followupChips .chip').forEach(c=>{if(c.textContent.trim()===n.followUp)c.className='chip c-fu';});}
+  if (n.followUp) { document.querySelectorAll('#followupChips .chip').forEach(c=>{if(c.textContent.trim()===n.followUp) c.className='chip c-fu';}); }
   document.getElementById('formCoName').textContent=co.name;
   document.getElementById('formCoMeta').textContent='Editing note from '+n.visitTime;
   const bb=document.getElementById('boothBanner');
@@ -806,20 +843,17 @@ function editNote(id) {
   document.getElementById('formPanel').classList.add('open');
 }
 
-// ── BUSINESS CARD SCAN ───────────────────────────────────────
 function handleCardPhoto(e) {
-  const file=e.target.files[0];
-  if(!file) return;
-  const preview=document.getElementById('cardPreview');
-  const btn=document.getElementById('scanBtn');
-  const reader=new FileReader();
-  reader.onload=async ev=>{
-    preview.src=ev.target.result;
-    preview.style.display='block';
-    const key=localStorage.getItem('coat26_key')||'';
-    if(!key){btn.className='scan-btn';btn.textContent='📷 Scan Business Card — auto-fill below';showToast('⚠️ Set API key in Sync tab');return;}
-    btn.className='scan-btn scanning';
-    btn.textContent='⏳ Reading card with Claude…';
+  const file = e.target.files[0];
+  if (!file) return;
+  const preview = document.getElementById('cardPreview');
+  const btn = document.getElementById('scanBtn');
+  const reader = new FileReader();
+  reader.onload = async ev => {
+    preview.src=ev.target.result; preview.style.display='block';
+    const key = localStorage.getItem('coat26_key')||'';
+    if (!key) { showToast('⚠️ Set API key in Sync tab'); return; }
+    btn.className='scan-btn scanning'; btn.textContent='⏳ Reading card with Claude…';
     try {
       const b64=ev.target.result.split(',')[1];
       const res=await fetch('https://api.anthropic.com/v1/messages',{
@@ -827,12 +861,12 @@ function handleCardPhoto(e) {
         headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
         body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,messages:[{role:'user',content:[
           {type:'image',source:{type:'base64',media_type:file.type||'image/jpeg',data:b64}},
-          {type:'text',text:'Extract contact info from this business card. Reply ONLY with JSON: {name,title,email,phone}. Empty string if not found. No markdown.'}
+          {type:'text',text:'Extract contact info from this business card. Reply ONLY with JSON: {"name":"","title":"","email":"","phone":""}. Empty string if not found. No markdown.'}
         ]}]})
       });
-      if(!res.ok){btn.className='scan-btn';btn.textContent='📷 Scan Business Card — auto-fill below';showToast('❌ API error '+res.status);return;}
+      if (!res.ok){btn.className='scan-btn';btn.textContent='📷 Scan Business Card — auto-fill below';showToast('❌ API error '+res.status);return;}
       const data=await res.json();
-      const info=JSON.parse((data.content?.[0]?.text||'{}'').replace(/```json|```/g,'').trim());
+      const info=JSON.parse((data.content?.[0]?.text||'{}').replace(/```json|```/g,'').trim());
       if(info.name) document.getElementById('fName').value=info.name;
       if(info.title) document.getElementById('fTitle').value=info.title;
       if(info.email) document.getElementById('fEmail').value=info.email;
@@ -845,44 +879,47 @@ function handleCardPhoto(e) {
   reader.readAsDataURL(file);
 }
 
-// ── NOTES LIST ───────────────────────────────────────────────
 function renderNotes() {
-  const el=document.getElementById('notesList');
-  if(!notes.length){el.innerHTML='<div class="empty-state"><div class="empty-ico">📋</div><div>No notes yet.<br>Visit companies to add notes.</div></div>';return;}
-  const byC={};
-  notes.forEach(n=>{if(!byC[n.company])byC[n.company]=[];byC[n.company].push(n);});
-  el.innerHTML=Object.entries(byC).map(([co,cns])=>`
+  const el = document.getElementById('notesList');
+  if (!notes.length) { el.innerHTML='<div class="empty-state"><div class="empty-ico">📋</div><div>No notes yet.<br>Visit companies to add notes.</div></div>'; return; }
+  const byC = {};
+  notes.forEach(n => { if(!byC[n.company]) byC[n.company]=[]; byC[n.company].push(n); });
+  el.innerHTML = Object.entries(byC).map(([co,cns]) => `
     <div class="ng">
       <div class="ng-hdr">${co}${cns[0].booth?' · 📍 Booth '+cns[0].booth:''}${cns[0].am?' · '+cns[0].am:''}</div>
-      ${cns.map(n=>`
+      ${cns.map(n => `
         <div class="note-card">
           <div class="nc-hdr">
             <span class="nc-time">🕐 ${n.visitTime}</span>
             <div style="display:flex;align-items:center;gap:8px;">
               <span style="font-size:11px;">${n.synced?'✅':'⏳'}</span>
-              <button class="edit-btn" onclick="editNote('${n.id}')">✏️ Edit</button>
+              <button class="edit-btn" data-id="${n.id}">✏️ Edit</button>
             </div>
           </div>
           <div class="nc-fields">
             ${n.interestLevel?`<span>${n.interestLevel}</span>`:''}
             ${n.followUp?`<span>→ ${n.followUp}</span>`:''}
           </div>
-          <div class="nc-contact">👤 ${n.contactName?`<strong>${n.contactName}</strong>${n.contactTitle?' — '+n.contactTitle:''}${n.contactEmail?' · '+n.contactEmail:''}${n.contactPhone?' · '+n.contactPhone:''}`:'<span style="color:var(--t1);font-style:italic;">No contact — tap Edit</span>'}</div>
+          <div class="nc-contact">👤 ${n.contactName?`<strong>${n.contactName}</strong>${n.contactTitle?' — '+n.contactTitle:''}${n.contactEmail?' · '+n.contactEmail:''}${n.contactPhone?' · '+n.contactPhone:''}` :'<span style="color:var(--t1);font-style:italic;">No contact — tap Edit</span>'}</div>
           ${n.summary?`<div class="nc-summary">${n.summary}</div>`:''}
         </div>
       `).join('')}
     </div>
-  `).join('')+'<div class="pb"></div>';
+  `).join('') + '<div class="pb"></div>';
+
+  // Attach edit button listeners after render
+  document.querySelectorAll('.edit-btn[data-id]').forEach(btn => {
+    btn.addEventListener('click', () => editNote(btn.dataset.id));
+  });
 }
 
-// ── SYNC ─────────────────────────────────────────────────────
 function updateBadge() {
-  const p=notes.filter(n=>!n.synced).length;
-  const b=document.getElementById('headerBadge');
-  if(p>0){b.textContent=p;b.style.display='flex';}else{b.style.display='none';}
+  const p = notes.filter(n=>!n.synced).length;
+  const b = document.getElementById('headerBadge');
+  if (p>0){b.textContent=p;b.style.display='flex';}else{b.style.display='none';}
 }
 function updateStats() {
-  const total=notes.length,pending=notes.filter(n=>!n.synced).length,synced=notes.filter(n=>n.synced).length;
+  const total=notes.length, pending=notes.filter(n=>!n.synced).length, synced=notes.filter(n=>n.synced).length;
   const cos=[...new Set(notes.map(n=>n.company))].length;
   document.getElementById('statTotal').textContent=total;
   document.getElementById('statPending').textContent=pending;
@@ -890,7 +927,7 @@ function updateStats() {
   document.getElementById('statCompanies').textContent=cos;
   const btn=document.getElementById('syncMainBtn');
   btn.disabled=pending===0;
-  btn.textContent=pending>0?`📤 Sync ${pending} Pending Note${pending>1?'s':''}`:'✅ All Synced';
+  btn.textContent=pending>0?`📤 Sync ${pending} Pending Note${pending>1?'s':''}` :'✅ All Synced';
 }
 function saveScriptUrl() {
   const u=document.getElementById('scriptUrlInput').value.trim();
@@ -901,9 +938,8 @@ function saveScriptUrl() {
 }
 function saveApiKey() {
   const k=document.getElementById('apiKeyInput').value.trim();
-  if(!k){document.getElementById('apiStatus').textContent='⚠️ Enter a key first.';return;}
+  if(!k){document.getElementById('apiStatus').textContent='⚠️ Enter a key.';return;}
   localStorage.setItem('coat26_key',k);
-  ANTHROPIC_API_KEY=k;
   document.getElementById('apiStatus').textContent='✅ Key saved!';
   setTimeout(()=>document.getElementById('apiStatus').textContent='',2000);
 }
@@ -924,22 +960,16 @@ async function syncNotes() {
     updateBadge(); updateStats();
     setStatus(`✅ ${pending.length} note${pending.length>1?'s':''} sent to Google Sheets!`,'ok');
     btn.disabled=false;
-  } catch(err){
-    setStatus('❌ Network error: '+err.message+' — notes are safe locally.','err');
-    btn.disabled=false; updateStats();
-  }
+  } catch(err){setStatus('❌ '+err.message,'err');btn.disabled=false;updateStats();}
 }
 function setStatus(msg,type){document.getElementById('syncStatus').innerHTML=`<div class="status-msg s-${type}">${msg}</div>`;}
-
-// ── TOAST ─────────────────────────────────────────────────────
 function showToast(msg){
-  const t=document.createElement('div');
-  t.textContent=msg; t.className='toast';
-  document.body.appendChild(t);
-  setTimeout(()=>t.remove(),2200);
+  const t=document.createElement('div'); t.textContent=msg; t.className='toast';
+  document.body.appendChild(t); setTimeout(()=>t.remove(),2200);
 }
 
 init();
+
 </script>
 </body>
 </html>
